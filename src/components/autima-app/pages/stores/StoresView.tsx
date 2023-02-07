@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import StoreLine from "./components/StoreLine";
 import NewStoreForm from "./components/NewStoreForm";
 import { IoAddOutline, IoAddSharp } from "react-icons/io5";
 import styles from "./stores.module.scss"
