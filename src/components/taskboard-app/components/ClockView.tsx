@@ -6,11 +6,9 @@ import Input from "./Input";
 import SelectionDiv from "./SelectionDiv";
 import { IoArrowBack, IoScanOutline } from "react-icons/io5";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { useClockSession } from "../../../hooks/useClockSession";
 import { taskboardContext } from "../TaskboardApp";
 import logo from "../../../assets/logo_white.svg";
 import style from "../clockapp.module.scss"
-import Taskboard from "./Taskboard";
 
 function ClockView() {
   const session = useContext(taskboardContext);
