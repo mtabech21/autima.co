@@ -1,0 +1,114 @@
+@import "../../../../assets/colors";
+
+.topbarSafezone {
+  min-height: 50px;
+  background-color: white;
+  border-bottom: $grayline;
+  overflow: visible;
+  max-width: 100%;
+}
+
+.storesOptions {
+  display: flex;
+  padding: 1em;
+}
+
+.addBtn {
+  color: $blue;
+  font-weight: bold;
+  background-color: white;
+  padding: 1em;
+  border-radius: 1em;
+  border: $grayline;
+
+  &:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+  }
+}
+
+.newStoreForm {
+  position: absolute;
+  background-color: whitesmoke;
+  width: calc(100vw - 250px);
+  height: 100%;
+  min-width: max-content;
+  background-color: rgba(128, 128, 128, 0.331);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.storeForm {
+  height: 10em;
+  width: 30em;
+  background-color: white;
+  opacity: 1;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topForm {
+  width: 100%;
+  display: flex;
+  padding: .5em;
+  align-items: center;
+  border-bottom: $grayline;
+}
+
+.closeBtn {
+  font-size: 2em;
+  height: 100%;
+  color: red;
+
+  &:hover {
+    color: rgb(160, 0, 0);
+    cursor: pointer;
+  }
+
+}
+
+.formTitle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1em;
+  overflow-y: scroll;
+}
+
+.wrapper {
+  padding: 2em;
+}
+
+.storesGrid {
+  display: grid;
+  gap: 2em;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.storeCard {
+  background-color: white;
+  aspect-ratio: 1/1;
+  border-radius: 1em;
+  border: $grayline;
+  display: flex;
+  flex-direction: column;
+  transition: 0.15s ease-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+    border-color: $dark;
+  }
+}

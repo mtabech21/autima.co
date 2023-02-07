@@ -1,0 +1,182 @@
+@import "../../../assets/colors";
+
+.sidebar {
+  left: 0;
+  background: $navy;
+  width: 250px;
+  min-width: 250px;
+  min-height: 100vh;
+  overflow-y: scroll;
+  font-size: 13px;
+  box-sizing: border-box;
+  font-weight: 500;
+
+  &::before {
+    content: '';
+    height: 500px;
+    width: 500px;
+    position: relative;
+    z-index: 4;
+    background-color: white;
+    overflow: hidden;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.sidebar-container {
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo-container {
+  position: relative;
+  background-color: $dark;
+  border-bottom: $grayline;
+}
+
+.sidebar-logo {
+  position: relative;
+  cursor: default;
+  width: 160px;
+  letter-spacing: 0em;
+  font-size: 18px;
+  user-select: none;
+  text-align: right;
+  box-sizing: border-box;
+  transition: all 0.2s;
+  height: fit-content;
+  margin: 15px 30px;
+}
+
+.logo img {
+  user-select: none;
+  width: inherit;
+}
+
+.navigation-container {
+  text-decoration: none;
+  height: 100%;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  //background-image: url('../../../nav_nachos@2x.png');
+  background-attachment: fixed;
+  background-position-x: left 0px;
+  background-position-y: bottom 0px;
+  background-size: 250px;
+  background-repeat: no-repeat;
+}
+
+.logout:hover {
+  cursor: pointer;
+  background: rgb(20, 105, 185, 0.2);
+  gap: 2em;
+}
+
+.logout:active {
+  cursor: pointer;
+  background: rgba(20, 105, 185, 0.699);
+  gap: 2em;
+}
+
+.logout {
+  background-color: rgba(71, 71, 71, 0.185);
+  user-select: none;
+  display: flex;
+  height: 40px;
+  gap: 1.5em;
+  align-items: center;
+  text-decoration: none;
+  font-size: 13px;
+  transition: all .1s ease-in;
+}
+
+.nav-to {
+  user-select: none;
+  margin: auto;
+  display: flex;
+  height: 35px;
+  gap: 1.5em;
+  align-items: center;
+  text-decoration: none;
+  color: rgb(221, 221, 221);
+}
+
+.home-nav {
+  color: white;
+  height: 45px;
+  background-color: $dark;
+  border-bottom: $grayline;
+}
+
+.div-nav {
+  height: 45px;
+  background-color: $dark;
+  display: flex;
+  border-bottom: $grayline;
+
+}
+
+.nav-to:hover {
+  cursor: pointer;
+  background: rgb(20, 105, 185, 0.2);
+}
+
+.nav-to:active {
+  cursor: pointer;
+}
+
+.active-nav-to {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: $blue;
+}
+
+.active-nav-to:hover {
+  background-color: $blue;
+}
+
+.active-nav-to:active {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.icon {
+  box-sizing: border-box;
+  font-size: 18px;
+  margin-left: 30px;
+  border-radius: 5px;
+}
+
+.logout .icon {
+  box-sizing: border-box;
+  font-size: 20px;
+  margin-left: 40px;
+  border-radius: 5px;
+  color: rgb(173, 83, 83);
+}
+
+.sidebar-footer {
+  background: $dark;
+  border-top: $grayline;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 255, 240, 0.623);
+  margin-top: auto;
+  padding-bottom: 20px;
+}
+
+.sidebar-footer a {
+  color: rgb(20, 105, 185);
+}
+
+.logout-container {
+  margin-bottom: 20px;
+  border: $grayline;
+  margin: 20px;
+}

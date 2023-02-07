@@ -1,0 +1,136 @@
+@import '../../assets/colors';
+
+.auth-page {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background: $navy;
+    overflow: scroll;
+}
+
+.auth-page a {
+    color: rgb(20, 105, 185);
+}
+
+.auth-page a:hover {
+    cursor: pointer;
+    outline: 1px blue;
+}
+
+.auth-container {
+    border: 1px solid gray;
+    margin: auto;
+    padding: 50px;
+    width: fit-content;
+    max-width: 600px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background: whitesmoke;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 800px) {
+    .auth-container {
+        border-radius: 0px;
+        border: none;
+        height: 100vh;
+    }
+
+    .auth-page {
+        background-color: whitesmoke;
+    }
+}
+
+.auth-logo {
+    width: 300px;
+    margin: 50px auto;
+    user-select: none;
+}
+
+.auth-lock {
+    width: fit-content;
+    font-size: 30px;
+    margin: auto;
+    color: gray;
+}
+
+.auth-input {
+    justify-content: center;
+    display: flex;
+    margin: 30px auto auto auto;
+    white-space: nowrap;
+
+}
+
+.auth-input input {
+    font-size: 18px;
+    height: 40px;
+    width: 100%;
+    border: 1px solid gray;
+    outline: none;
+    border-radius: 5px;
+    transition: all .5s;
+    padding-left: 10px;
+}
+
+.auth-form {
+    display: block;
+    width: 100%;
+}
+
+.auth-btn {
+    width: fit-content;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.auth-btn button {
+    color: white;
+    height: 40px;
+    padding: 0px 20px;
+    background: rgb(20, 105, 185);
+    border: none;
+    margin: 20px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.auth-btn button:hover {
+    cursor: pointer;
+    background: rgb(17, 87, 153);
+}
+
+.auth-create {
+    margin: auto;
+    margin-top: 20px;
+    width: fit-content;
+}
+
+.auth-create button {
+    color: rgb(20, 105, 185);
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.auth-create button:active {
+    color: red;
+}
+
+.auth-form_container {
+    padding: 30px;
+}
+
+.auth-icon {
+    margin: auto;
+    font-size: 20px;
+    height: 1em;
+    padding-right: 16px;
+}
+
+.auth-form-row {
+    display: flex;
+    gap: 20px;
+}

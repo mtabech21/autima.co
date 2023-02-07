@@ -1,0 +1,110 @@
+.availabilities-app {
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+.availabilities-window {
+  display: flex;
+  border: 1px solid gray;
+  width: 70%;
+  background-color: rgb(50, 50, 50);
+  user-select: none;
+  gap: 1px;
+  flex-shrink: 0;
+  margin: min(15vh, 200px);
+}
+.availabilities-day {
+  background-color: white;
+  flex-basis: 1/7 * 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.selectable-interval {
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  flex-basis: 0.7em;
+  height: 0;
+  border-bottom: 1px solid whitesmoke;
+  border-top: 1px solid transparent;
+  background-color: white;
+  cursor: cell;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+.selected-interval {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  background-color: rgb(180, 75, 75);
+  &:hover {
+    background-color: rgb(180, 75, 75);
+  }
+}
+.first-selected {
+  border-top: 3px solid rgb(134, 41, 41);
+}
+.last-selected {
+  border-bottom: 3px solid rgb(134, 41, 41);
+}
+.time-on-board {
+  position: relative;
+  color: white;
+  user-select: none;
+  margin: 5px;
+  border-radius: 5px;
+  pointer-events: none;
+  font-weight: 600;
+  &:hover {
+    pointer-events: none;
+  }
+}
+.tob-t {
+  align-self: flex-start;
+}
+.tob-b {
+  align-self: flex-end;
+}
+.reset-button-day {
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  flex-grow: 1;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(50, 50, 50);
+  padding: 5px;
+  transition: all 200ms;
+  background-color: rgba(20, 105, 185, 0.726);
+  &:hover {
+    background-color: rgba(46, 121, 192, 0.726);
+  }
+  &:active {
+    background-color: rgb(19, 43, 80);
+    transition: none;
+  }
+}
+.selectall-button-day {
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  flex-grow: 1;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(50, 50, 50);
+  padding: 5px;
+  transition: all 200ms;
+  background-color: rgba(228, 193, 38, 0.726);
+  &:hover {
+    background-color: rgba(192, 146, 46, 0.726);
+  }
+  &:active {
+    background-color: rgb(151, 127, 21);
+    transition: none;
+  }
+}
