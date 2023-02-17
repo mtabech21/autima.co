@@ -12,7 +12,7 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import { app } from "../../App";
 import EmployeesView from "./pages/employees/EmployeesView";
 import EmployeeOnboardView from "./pages/employees/onboarding/EmployeeOnboardView";
-import useCompany from "../../hooks/useCompany";
+import useCompany, { CompanyContext } from "../../hooks/useCompany";
 import { companyContext } from "../../hooks/useCompany";
 
 function AutimaApp() {
@@ -72,7 +72,7 @@ const AdminApp = (props: AdminAppProps) => {
     });
   });
 
-  const company = useCompany(props.companyId)
+  const company: CompanyContext = useCompany(props.companyId)
 
   return (
     <companyContext.Provider value={company}><Sidebar /><div ref={appWindow} className={styles.managerApp}>
