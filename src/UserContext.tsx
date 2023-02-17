@@ -1,19 +1,16 @@
+import { Auth, User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
-import { createContext} from "react";
-export const UserContext = createContext<any>(null)
+import { createContext } from "react";
+
 
 interface UserContextType {
-  children: JSX.Element
-  value: boolean | DocumentData | null | undefined
+  profile: DocumentData | null
+  user: User | null
+  loading: boolean
 }
 
+export const UserContext = createContext<UserContextType>({} as UserContextType)
 
-function UserContextProvider(props: UserContextType) {
-  return (
-    <UserContext.Provider value={props.value}>
-      {props.children}
-    </UserContext.Provider>
-  )
-}
 
-export default UserContextProvider
+
+

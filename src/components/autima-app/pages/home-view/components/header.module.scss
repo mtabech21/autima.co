@@ -1,7 +1,6 @@
 @import '../../../../../assets/colors';
 
 .managerHomeHeader {
-    min-height: 200px;
     background-color: white;
     border-bottom: $grayline;
     overflow: visible;
@@ -10,11 +9,11 @@
 
 .managerHomeHeaderContainer {
     width: 100%;
+    padding: 0em 5em
 }
 
 .managerHomeHeaderContainer h1 {
     margin: auto;
-    padding-top: 50px;
     width: fit-content;
     text-align: center;
     font-size: 50px;

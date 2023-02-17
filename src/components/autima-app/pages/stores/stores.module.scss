@@ -1,12 +1,6 @@
 @import "../../../../assets/colors";
 
-.topbarSafezone {
-  min-height: 50px;
-  background-color: white;
-  border-bottom: $grayline;
-  overflow: visible;
-  max-width: 100%;
-}
+
 
 .storesOptions {
   display: flex;
@@ -27,13 +21,26 @@
   }
 }
 
+.submitBtn {
+  color: white;
+  font-weight: bold;
+  background-color: $blue;
+  border-radius: 1em;
+  border: $grayline;
+  padding: .5em;
+  margin: 1em;
+
+  &:hover {
+
+    cursor: pointer;
+  }
+}
+
 .newStoreForm {
-  position: absolute;
-  background-color: whitesmoke;
+  position: fixed;
   width: calc(100vw - 250px);
-  height: 100%;
   min-width: max-content;
-  background-color: rgba(128, 128, 128, 0.331);
+  height: 80%;
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -41,14 +48,13 @@
 }
 
 .storeForm {
-  height: 10em;
-  width: 30em;
   background-color: white;
   opacity: 1;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 10px 10px 100px 10px gray;
 }
 
 .topForm {
@@ -56,7 +62,6 @@
   display: flex;
   padding: .5em;
   align-items: center;
-  border-bottom: $grayline;
 }
 
 .closeBtn {
@@ -79,15 +84,46 @@
   font-weight: bold;
 }
 
-.form {
+.backBtn {
+  max-width: fit-content;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
   flex-direction: column;
-  padding-left: 1em;
+  padding: 1em;
   overflow-y: scroll;
+  display: flex;
+}
+
+.prompt {
+  font-weight: bold;
+  padding-bottom: .5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.form input {
+  padding-left: .5em;
+  height: 2em;
+  border-radius: 1em;
+  border: $grayline;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .wrapper {
-  padding: 2em;
+  margin: 2em;
+  width: 80%;
+  margin-bottom: 2em;
+  overflow-y: scroll;
+  overflow: visible;
+  box-sizing: content-box;
+  min-width: fit-content;
 }
 
 .storesGrid {
@@ -110,5 +146,54 @@
     cursor: pointer;
     transform: scale(1.01);
     border-color: $dark;
+  }
+
+  & * {
+    white-space: nowrap;
+  }
+}
+
+.rightBarWrapper {
+  width: 20%;
+  height: 100%;
+  right: 0;
+  position: relative;
+  margin: 1em;
+}
+
+.rightBar {
+  position: fixed;
+  border-left: $grayline;
+  display: flex;
+  justify-content: left;
+  color: gray;
+  padding-left: 1em;
+  height: 100%;
+  flex-direction: column;
+  gap: .5em;
+
+  & div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.gridHeader {
+  width: 100%;
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.headerAddBtn {
+  display: flex;
+  color: $blue;
+  transition: 0.15s ease-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
   }
 }

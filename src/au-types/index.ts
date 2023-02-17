@@ -1,6 +1,18 @@
 
 import FS from "firebase/firestore"
 
+//AUTIMA TYPES
+export type AUEmployee = {
+
+}
+export type AUStore = {
+
+}
+export type AUCompany = {
+
+}
+
+
 
 export namespace AUErrors {
   export enum Punch {
@@ -13,6 +25,7 @@ export namespace AUErrors {
 
 export type UserID = string
 export type BranchID = string
+export type CompanyID = string
 
 export type TaskboardSession = {
   clock: ClockSession,

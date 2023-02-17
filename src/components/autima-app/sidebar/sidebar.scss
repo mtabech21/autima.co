@@ -2,7 +2,7 @@
 
 .sidebar {
   left: 0;
-  background: $navy;
+  background: $dark;
   width: 250px;
   min-width: 250px;
   min-height: 100vh;
@@ -100,7 +100,7 @@
   user-select: none;
   margin: auto;
   display: flex;
-  height: 35px;
+  height: 40px;
   gap: 1.5em;
   align-items: center;
   text-decoration: none;
@@ -146,10 +146,17 @@
   cursor: pointer;
 }
 
-.icon {
+.iconhome {
   box-sizing: border-box;
   font-size: 18px;
   margin-left: 30px;
+  border-radius: 5px;
+}
+
+.icon {
+  box-sizing: border-box;
+  font-size: 18px;
+  margin-left: 15px;
   border-radius: 5px;
 }
 
@@ -179,4 +186,13 @@
   margin-bottom: 20px;
   border: $grayline;
   margin: 20px;
+}
+
+.insidebarWrapper {
+  margin-top: 1em;
+  margin-left: .8em;
+  border-radius: .5em 0em 0em .5em;
+  overflow: hidden;
+  background: $navy;
+  border: $grayline;
 }

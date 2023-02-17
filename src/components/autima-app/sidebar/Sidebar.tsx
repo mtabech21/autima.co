@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../../assets/logo_white.svg";
 import {
   IoHome,
@@ -13,14 +13,20 @@ import {
   IoPersonCircleOutline,
   IoAlbums,
   IoAlbumsOutline,
+  IoStorefront,
+  IoCheckbox,
 } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
 import { useNavigate, useLocation } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../../App";
+import { reload, signOut } from "firebase/auth";
+import App, { app, auth, firebaseConfig } from "../../../App";
 import "./sidebar.scss";
+import { getFunctions, httpsCallable }  from "firebase/functions"
+
+
 
 function Sidebar() {
+
   let navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
@@ -47,6 +53,8 @@ function Sidebar() {
         </div>
         <div className={"navigation-container"}>
           <div className={"nav-to-cont"}>
+
+
             {/*HOME*/}
             <div
               className={"nav-to home-nav"}
@@ -54,10 +62,12 @@ function Sidebar() {
                 navigate("/");
               }}
             >
-              <IoHome className={"icon"} />
+              <IoHome className={"iconhome"} />
               <div>Home</div>
               <MdArrowForwardIos className={"icon"} />
             </div>
+            <br />
+            <div className={"insidebarWrapper"}>
             {/*STORES*/}
             <div
               className={
@@ -72,7 +82,9 @@ function Sidebar() {
               <IoAlbumsOutline className={"icon"} />
               <div>Stores</div>
             </div>
-            {/*SCHEDULE*/}
+
+
+            {/* SCHEDULE
             <div
               className={
                 currentLocation[1] === "schedule"
@@ -85,7 +97,9 @@ function Sidebar() {
             >
               <IoCalendarOutline className={"icon"} />
               <div>Schedule</div>
-            </div>
+            </div> */}
+
+
             {/*EMPLOYEES*/}
             <div
               className={
@@ -99,21 +113,8 @@ function Sidebar() {
             >
               <IoPeople className={"icon"} />
               <div>Employees</div>
-            </div>
-            {/*MAIL*/}
-            <div
-              className={
-                currentLocation[1] === "mail"
-                  ? "nav-to active-nav-to"
-                  : "nav-to"
-              }
-              onClick={() => {
-                navigate("/mail");
-              }}
-            >
-              <IoMailOutline className={"icon"} />
-              <div>Messages</div>
-            </div>
+              </div>
+              
             {/*PAYROLL*/}
             <div
               className={
@@ -128,8 +129,39 @@ function Sidebar() {
               <IoCash className={"icon"} />
               <div>Payroll</div>
             </div>
-            {/*REPORTS*/}
 
+
+            {/*MESSAGES*/}
+            <div
+              className={
+                currentLocation[1] === "mail"
+                  ? "nav-to active-nav-to"
+                  : "nav-to"
+              }
+              onClick={() => {
+                navigate("/messages");
+              }}
+            >
+              <IoMailOutline className={"icon"} />
+              <div>Messages</div>
+              </div>
+              
+            {/*TASKS*/}
+            <div
+              className={
+                currentLocation[1] === "tasks"
+                  ? "nav-to active-nav-to"
+                  : "nav-to"
+              }
+              onClick={() => {
+                navigate("/tasks");
+              }}
+            >
+              <IoCheckbox className={"icon"} />
+              <div>Tasks</div>
+            </div>
+              
+            {/* REPORTS
             <div
               className={
                 currentLocation[1] === "reports"
@@ -142,8 +174,10 @@ function Sidebar() {
             >
               <IoDocument className={"icon"} />
               <div>Reports</div>
-            </div>
-            {/*ACCOUNT*/}
+            </div> */}
+
+
+            {/* ACCOUNT
             <div
               className={
                 currentLocation[1] === "account"
@@ -156,7 +190,26 @@ function Sidebar() {
             >
               <IoPersonCircleOutline className={"icon"} />
               <div>Account</div>
+            </div> */}
             </div>
+            <br />
+            <div className={"insidebarWrapper"}>
+            {/*BUSINESS*/}
+            <div
+              className={
+                currentLocation[1] === "mybusiness"
+                  ? "nav-to active-nav-to"
+                  : "nav-to"
+              }
+              onClick={() => {
+                navigate("/mybusiness");
+              }}
+            >
+              <IoStorefront className={"icon"} />
+              <div>Business</div>
+            </div>
+
+
             {/*SETTINGS*/}
             <div
               className={
@@ -171,6 +224,8 @@ function Sidebar() {
               <IoSettings className={"icon"} />
               <div>Settings</div>
             </div>
+
+
             {/*SUPPORT*/}
             <div
               className={
@@ -184,7 +239,10 @@ function Sidebar() {
             >
               <IoHelpCircleOutline className={"icon"} />
               <div>Support</div>
+              </div>
             </div>
+
+
           </div>
         </div>
         <div className={"sidebar-footer"}>

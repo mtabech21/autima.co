@@ -10,7 +10,7 @@ import {
 import style from "./topbar.module.scss";
 import { useNavigate } from "react-router-dom";
 
-function ManagerTopBar() {
+export function Topbar() {
   const navigate = useNavigate();
   return (
     <div className={style.topbar}>
@@ -29,7 +29,7 @@ function ManagerTopBar() {
         }}
       >
         <AiFillCaretRight style={{ margin: "10px" }} />
-        <p>{"Spirit Halloween (H&M Global)"}</p>
+        <p style={{whiteSpace: "nowrap"}}>{"Spirit Halloween (H&M Global)"}</p>
       </div>
       <button>
         <AiFillCalendar />
@@ -44,11 +44,11 @@ function ManagerTopBar() {
         onClick={() => navigate(`/taskboard/testKey`)}
         className={style.navToClockBtn}
       >
-        <AiOutlineFieldTime />
+        <AiOutlineFieldTime title="Taskboard" />
         <h1>-</h1>
       </div>
     </div>
   );
 }
 
-export default ManagerTopBar;
+
