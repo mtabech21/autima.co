@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipDefaultLibCheck": true,
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
