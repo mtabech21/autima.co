@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { LegacyRef, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import HomeView from "./pages/home-view/HomeView";
 import { Topbar } from "./topbar/Topbar";
@@ -6,28 +6,31 @@ import Sidebar from "./sidebar/Sidebar";
 import StoresView from "./pages/stores/StoresView";
 import SingleStoreView from "./pages/stores/components/SingleStoreView";
 import styles from  "./app.module.scss"
-import { UserContext } from "../../UserContext";
 import Loading from "../loading/Loading";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { app } from "../../App";
 import EmployeesView from "./pages/employees/EmployeesView";
 import EmployeeOnboardView from "./pages/employees/onboarding/EmployeeOnboardView";
-import useCompany, { CompanyContext } from "../../hooks/useCompany";
+import useCompany, { CompanyContext, businessUID } from "../../hooks/useCompany";
 import { companyContext } from "../../hooks/useCompany";
+import MyBusinessView from "./pages/mybusiness/MyBusinessView";
+import useProfile, { profileContext } from "../../hooks/useProfile";
+import { User } from "firebase/auth";
 
-function AutimaApp() {
-  const nav = useNavigate()
-  const current = useContext(UserContext)
+interface AppProps {
+  user: User
+}
+
+function AutimaApp(props: AppProps) {
   const [view, setView] = useState(<Loading/>)
   useEffect(() => {
-    current.user?.getIdTokenResult(true).then(v => {
+    props.user.getIdTokenResult(true).then(v => {
       if (v.claims.isBusinessAccount === true) {
-        setView(<AdminApp companyId={current.user!.uid} />)
+        setView(<AdminApp user={props.user} />)
       } else {
-        setView(<EmployeeApp />)
+        setView(<EmployeeApp user={props.user}/>)
       }
     })
-    nav("/home")
   },[])
   return (
     <>
@@ -43,22 +46,22 @@ const TopbarSafezone = () => {
     return <div className={styles.topbarSafezone} />
 }
 
-const EmployeeApp = () => {
-  let functions = getFunctions(app)
+interface EmployeeAppProps {
+  user: User,
+}
+
+const EmployeeApp = (props: EmployeeAppProps) => {
+  const profile = useProfile(props.user)
+
   return (
-    <div>
-      <button onClick={e => {
-            e.preventDefault()
-        httpsCallable(functions, "setAsBusiness")({ bool: true }).then(() => {
-          window.location.reload()
-            })
-          
-          }}>CONVERT TO BUSINESS ACCOUNT</button>
-    </div>
+    <profileContext.Provider value={profile}>
+      <button onClick={e => { e.preventDefault(); profile.setAsBusinessAccount() }}>CONVERT TO BUSINESS ACCOUNT</button>
+      
+    </profileContext.Provider>
   )
 }
 interface AdminAppProps {
-  companyId: string
+  user: User
 }
 
 
@@ -72,7 +75,7 @@ const AdminApp = (props: AdminAppProps) => {
     });
   });
 
-  const company: CompanyContext = useCompany(props.companyId)
+  const company: CompanyContext = useCompany(businessUID(props.user.uid))
 
   return (
     <companyContext.Provider value={company}><Sidebar /><div ref={appWindow} className={styles.managerApp}>
@@ -92,7 +95,7 @@ const AdminApp = (props: AdminAppProps) => {
       <Routes>
         <Route path="*" element={<HomeView />} />
         <Route path={"/stores"}>
-          <Route path={":storeID"} element={<SingleStoreView />} />
+          <Route path={":storeId"} element={<SingleStoreView />} />
           <Route path={""} element={<StoresView />} />
         </Route>
         <Route path={"/payroll"}>
@@ -101,16 +104,60 @@ const AdminApp = (props: AdminAppProps) => {
           <Route path={""} element={<EmployeesView />}/>
           <Route path={"onboard"} element={<EmployeeOnboardView/>}/>
         </Route>
-        <Route path={"/messages"}>
-        </Route>
-        <Route path={"/tasks"}>
-
-        </Route>
+        <Route path={"/messages"}/>
+        <Route path={"/tasks"}/>
+        <Route path={"/mybusiness"} element={<MyBusinessView />} />
+        <Route path={"/support"} element={<TestElement/>}/>
       </Routes>
-    </div></companyContext.Provider>
+    </div>
+    </companyContext.Provider>
   )
 }
 
+type AddressResult = {
+  addressLines: string[]
+  administrativeArea: string
+  languageCode: string
+  locality: string
+  postalCode: string
+  regionCode: string
+}
 
+const useAddressValidation = () => {
+  const [input, setInput] = useState("")
+  const [result, setResult] = useState<AddressResult>()
+
+  
+
+  function validate() {
+    const body = {
+      address: {
+        regionCode: "CA",
+        addressLines: [input]
+      }
+    }
+
+    fetch("https://addressvalidation.googleapis.com/v1:validateAddress?key=AIzaSyDQQOEb_WD7RJFrqiC_oKXAJlV36oZUSKQ", {
+      method: "POST",
+      body: JSON.stringify(body)
+    }).then(v => {
+      v.json().then(v => {
+        console.log(v.result.address.postalAddress as AddressResult)
+        setResult(v as AddressResult)
+      })
+    })
+  }
+  return {input, setInput, result, validate}
+}
+
+const TestElement = () => {
+  const address = useAddressValidation()
+  return (
+    <form onSubmit={(e) => { e.preventDefault(); address.validate() }}>
+      <input value={address.input} onChange={e => {address.setInput(e.currentTarget.value)}}  />
+      <div>{`${address.result}`}</div>
+    </form>
+  )
+}
 
 export default AutimaApp;

@@ -10,7 +10,6 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 import useAuth from "./hooks/useAuth";
-import { UserContext } from "./UserContext";
 
 // Initialize database information, connections and authorisations
 export const firebaseConfig = {
@@ -33,7 +32,6 @@ function App() {
   
   const current = useAuth(auth, db);
   return (
-    <UserContext.Provider value={current}>
       <BrowserRouter>
         {current.loading ? (
           <Loading />
@@ -41,7 +39,7 @@ function App() {
           <div className="app">
           <Routes>
             {/* MAIN APP **/}
-            <Route path={`*`} element={<AutimaApp />} />
+            <Route path={`*`} element={<AutimaApp user={current.user} />} />
             {/* CLOCK APP **/}
             <Route path={`taskboard`}>
               <Route
@@ -59,7 +57,6 @@ function App() {
           <AuthApp />
         )}
       </BrowserRouter>
-    </UserContext.Provider>
   );
 }
 

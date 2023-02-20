@@ -1,18 +1,17 @@
 import React, { useContext } from 'react'
 import { IoAddOutline, IoClose, IoExit } from 'react-icons/io5'
 import styles from "../stores.module.scss"
-import useCreateStore from '../../../../../hooks/useStore'
-import { UserContext } from '../../../../../UserContext'
+import { companyContext } from '../../../../../hooks/useCompany'
 
 interface NewStoreFormProps {
-  closeButtonDo: ()=>void
+  closeButtonDo: () => void
 }
 
 
 
 function NewStoreForm(props: NewStoreFormProps) {
-  const create = useCreateStore()
-  
+  const company = useContext(companyContext)
+  const create = company.useCreateStore()
   return (
     <div className={ styles.storeForm}>
       <div className={styles.topForm}>
@@ -24,9 +23,9 @@ function NewStoreForm(props: NewStoreFormProps) {
         <div className={styles.form}>
           <div className={styles.prompt}>
             <div style={{paddingRight: "1em"}}>Store ID:</div>
-            <input value={create.branchID} onChange={(e)=> {create.setBranchID(e.currentTarget.value)}}/>
+            <input value={create.branchId} onChange={(e)=> {create.setBranchId(e.currentTarget.value)}}/>
           </div>
-          <button className={styles.submitBtn} onClick={create.submit}>ADD BRANCH</button>
+          <button className={styles.submitBtn} onClick={() => { create.submit(); props.closeButtonDo() }}>ADD BRANCH</button>
         </div>
       </form>
 

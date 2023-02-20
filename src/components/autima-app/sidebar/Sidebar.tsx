@@ -134,7 +134,7 @@ function Sidebar() {
             {/*MESSAGES*/}
             <div
               className={
-                currentLocation[1] === "mail"
+                currentLocation[1] === "messages"
                   ? "nav-to active-nav-to"
                   : "nav-to"
               }

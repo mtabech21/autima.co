@@ -1,20 +1,15 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import NewStoreForm from "./components/NewStoreForm";
 import { IoAddOutline, IoAddSharp } from "react-icons/io5";
 import styles from "./stores.module.scss"
-import { BranchID } from "../../../../au-types";
 import { FaPlus } from "react-icons/fa";
-import { Query, collection, getDocs, query, where } from "firebase/firestore";
-import { UserContext } from "../../../../UserContext";
-import { businessUID } from "../../../../hooks/useStore";
-import { db } from "../../../../App";
 import { useNavigate } from "react-router-dom";
 import { companyContext } from "../../../../hooks/useCompany";
 
 
 interface AutimaStore {
-  storeID: string
-  branchID: string
+  storeId: string
+  branchId: string
   cityName: string
 }
 
@@ -34,12 +29,11 @@ function StoresView() {
           <div style={{ height: "3px", backgroundColor: "black", borderRadius: "3px" }}></div>
           <br />
           <div className={styles.storesGrid}>
-            {company.stores ?
-              company.stores.sort((a, b) =>  a.branchID.localeCompare(b.branchID) ).map((store, i, arr) =>
-                <StoreCard branchID={store.branchID} cityName={store.cityName} storeID={store.storeID} key={i} />
-                
+            {company.stores.length > 0 ? 
+              company.stores.sort((a, b) =>  a.branchId.localeCompare(b.branchId) ).map((store, i, arr) =>
+                <StoreCard branchId={store.branchId} cityName={store.cityName} storeId={store.storeId} key={i} />
               ) :
-              <StoreCardAdd onClick={() => setShowNewStoreForm(true)}/>
+                <StoreCardAdd onClick={() => setShowNewStoreForm(true)}/>
             }
           </div>
         </div>
@@ -84,9 +78,9 @@ function StoresView() {
 const StoreCard: React.FC<AutimaStore> = (store) => {
   const nav = useNavigate()
   return (
-    <div className={styles.storeCard} onClick={() => nav(store.storeID)}>
+    <div className={styles.storeCard} onClick={() => nav(store.storeId)}>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "1em", padding: "1em"}}>
-        <div style={{ fontWeight: "bold", width: "100%" }}>{store.branchID}</div>
+        <div style={{ fontWeight: "bold", width: "100%" }}>{store.branchId}</div>
         <div style={{ width: "100%", textAlign: "end" }}>{store.cityName}</div>
       </div>
     </div>

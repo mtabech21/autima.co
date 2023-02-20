@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import "./home.scss";
 import HomeHeader from "./components/HomeHeader";
-import { UserContext } from "../../../../UserContext";
 
 function HomeView() {
-  const profile = useContext(UserContext);
   
   return (
     <div className={"manager-home-container"}>
