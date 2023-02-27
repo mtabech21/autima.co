@@ -1,0 +1,24 @@
+@import "../../assets/colors";
+
+.managerApp {
+  background-color: white;
+  max-width: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.topbarContainer {
+  z-index: 1;
+  margin: 0;
+  width: calc(100% - 250px);
+  position: fixed;
+  transition: all 0.3s ease;
+}
+
+.topbarSafezone {
+  min-height: 50px;
+  background-color: white;
+  overflow: visible;
+  max-width: 100%;
+}

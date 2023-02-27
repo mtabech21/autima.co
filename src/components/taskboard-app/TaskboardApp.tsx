@@ -8,11 +8,18 @@ import Bottommenu from "./components/Bottommenu";
 import  tbLogo from "../../assets/tb_logo_black.svg"
 import useTaskboard from "../../hooks/useTaskboard";
 import { TaskboardSession } from "../../au-types";
+import { businessUID } from "../../hooks/useCompany";
+import { User } from "firebase/auth";
 
 export const taskboardContext = createContext<TaskboardSession>({} as TaskboardSession)
 
-function TaskboardApp() {
-  let taskboard = useTaskboard("testKey")
+interface TaskboardAppProps {
+  user: User
+}
+
+function TaskboardApp(props: TaskboardAppProps) {
+  let taskboard = useTaskboard(businessUID(props.user.uid))
+
   return (
     <taskboardContext.Provider value={taskboard}>
       <div style={{ width: "100%", display: "flex", padding: '1em', gap: "1em" }}>

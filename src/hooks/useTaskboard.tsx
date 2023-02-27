@@ -10,20 +10,17 @@ import { sassNull } from "sass";
 
 
 
-const useTaskboard = (branchID: string): TaskboardSession => {
-  const clock = useClock(branchID)
+const useTaskboard = (storeId: string): TaskboardSession => {
+  const clock = useClock(storeId)
 
 
-  return { clock, branchID }
+  return { clock, storeId }
 }
 
 
-const useClock = (branchID: string) : ClockSession => {
+const useClock = (storeId: string) : ClockSession => {
   const { currentTime, getCurrentDate } = useTime()
-  const { punch, activeUsers, selectingTypeFor, setSelectingTypeFor, getLocalIds, localIds } = usePunch(branchID)
-  useEffect(() => {
-    getLocalIds()
-  }, [branchID])
+  const { punch, activeUsers, selectingTypeFor, setSelectingTypeFor, localIds } = usePunch(storeId)
 
   return { currentTime, getCurrentDate, punch, activeUsers, selectingTypeFor, setSelectingTypeFor, localIds }
 
@@ -126,38 +123,35 @@ const useTime = () => {
 }
 
 
-const usePunch = (branchID: BranchID) => {
-  const activesQ = query(collection(db, "actives"), where("branchID", "==", branchID))
-  const branchRef = doc(db,`branches/${branchID}`)
+const usePunch = (storeId: string) => {
+  const activesQ = query(collection(db, "actives"), where("storeId", "==", storeId))
   const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([])
   const [selectingTypeFor, setSelectingTypeFor] = useState<string | null>(null)
-  const [localIds, setLocalIds] = useState<Object>({})
+  const [localIds, setLocalIds] = useState({} as Object)
 
-  const getLocalIds = useCallback(() => {
-
-      getDoc(branchRef).then(snap => {
-        if (snap.exists()) {
-          let data = snap.data()
-          getDoc(doc(db, `companies/${data.companyId}`)).then(snapp => {
-            if (snapp.exists()) {
-              let data = snapp.data()
-              console.log(data.localIds)
-              setLocalIds(data.localIds)
+  const getLocalIds: (companyId: string) => Promise<Object> = useCallback(async (companyId: string) => {
+    var result = {}
+          await getDoc(doc(db, "companies", companyId)).then(snap => {
+            if (snap.exists()) {
+              let data = snap.data()
+              result = data.localIds
             }
           })
-        }
-      })
-    
-  },[branchID])
+    return result
+  },[storeId])
 
   //onDbChange do:
   useEffect(() => {
+    getLocalIds(storeId).then(res => {
+      console.log(res)
+      setLocalIds(res)
+    })
     let unsub = onSnapshot(activesQ, (snap) => {
       snap.docChanges().forEach(change => {
         let data = change.doc.data()
         if (change.type === "added") {
           setActiveUsers(prev => {
-            let newUser = new ActiveUser(change.doc.id, data.latestActivity, data.fullName, data.branchID)
+            let newUser = new ActiveUser(change.doc.id, data.latestActivity, data.fullName, data.storeId)
             
             return [...prev, newUser]
           })
@@ -225,9 +219,9 @@ const usePunch = (branchID: BranchID) => {
     }
     if (punchData.type != null) {
       setDoc(activeRef, {
-        "branchID": branchID,
+        "storeId": storeId,
         "latestActivity": arrayUnion(punchData),
-        "fullName": "Moe Tabech"
+        "fullName": "Employee 1"
       }, {merge: true})
     } else {
       throw AUErrors.Punch.isNull

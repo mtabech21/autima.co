@@ -1,11 +1,13 @@
 import { get, onChildChanged, onValue, ref } from "firebase/database";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { IoPerson } from "react-icons/io5";
-import { liveDb } from "../../../App";
+import { db, liveDb } from "../../../App";
 import { taskboardContext } from "../TaskboardApp";
 import style from "../clockapp.module.scss"
 import { ActiveUser, PunchType, PunchTypeFrom } from "../../../au-types";
 import { PunchData } from "../../../au-types";
+import { ProfileInfo } from "../../../hooks/useProfile";
+import { doc, getDoc } from "firebase/firestore";
 
 
 interface LHProps {
@@ -48,7 +50,27 @@ interface ALDProps {
 
 function ActiveLogDiv(props: ALDProps) {
   const [reveal, setReveal] = useState(false);
+  const [profile, setProfile] = useState({} as ProfileInfo)
+
+  const getProfile = async () => {
+    var result = {} as ProfileInfo
+    let profileRef = doc(db,"profiles", props.data.uid)
+    await getDoc(profileRef).then((snap) => {
+      console.log(props.data.uid)
+      if (snap.exists()) {
+        console.log(snap.data())
+        result = snap.data() as ProfileInfo
+      }
+    })
+    return result
+  }
   
+  useEffect(() => {
+    getProfile().then((res) => {
+      setProfile(res)
+    })
+  },[])
+
   function getLatestStatus(): PunchData {
     if (props.data.latestActivity != null) {
       return props.data.latestActivity[props.data.latestActivity.length - 1]
@@ -89,7 +111,7 @@ function ActiveLogDiv(props: ALDProps) {
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
             }}
-          >{props.data.fullName}</div>
+          >{`${profile.firstName} ${profile.lastName}`}</div>
         </div>
         <div
           style={{

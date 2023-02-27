@@ -1,0 +1,158 @@
+@import "../../../../assets/_colors.scss";
+
+.header {
+  width: 100%;
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.wrapper {
+  margin: 2em;
+  max-width: 75%;
+  min-width: 75%;
+  height: 100%;
+  margin-bottom: 2em;
+  overflow-y: scroll;
+  overflow: visible;
+  box-sizing: content-box;
+}
+
+.rightBarWrapper {
+  width: 20%;
+  height: 100%;
+  right: 0;
+  position: relative;
+  margin: 1em;
+}
+
+.rightBar {
+  position: fixed;
+  border-left: $grayline;
+  display: flex;
+  justify-content: left;
+  color: gray;
+  padding-left: 1em;
+  height: 100%;
+  flex-direction: column;
+  gap: .5em;
+
+  & div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.headerAddBtn {
+  display: flex;
+  color: $blue;
+  transition: 0.15s ease-out;
+  align-items: center;
+  padding: .2em 1em;
+  border: $grayline;
+  border-radius: 1em;
+  background-color: whitesmoke;
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+  }
+}
+
+.employeesListWrapper {
+  border-radius: 1em;
+  overflow: hidden;
+  min-height: 500px;
+  box-shadow: $shadow;
+  margin-bottom: 2em;
+}
+
+.pending {
+  min-height: 0px;
+}
+
+.employeesListHeader {
+  width: 100%;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5em;
+  border-bottom: $grayline;
+
+  & * {
+    border: 100px;
+  }
+}
+
+.employeeList {
+
+  display: grid;
+  grid-template-rows: 1fr 5fr 20fr 1fr 1fr;
+}
+
+.employeeRow {
+  height: 3em;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 1fr 1fr;
+  border-bottom: $grayline;
+
+  & * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    font-size: 1.2em;
+    user-select: none;
+  }
+
+  & #localId {
+    font-weight: bold;
+  }
+
+  & #name {
+    justify-content: left;
+  }
+
+  & #branchId {
+    font-size: 1em;
+  }
+
+  & #position {
+    font-weight: bold;
+  }
+
+  & #link {
+    font-size: 1.5em;
+    color: gray;
+  }
+
+  & #alert {
+    color: orangered;
+  }
+
+  &:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+  }
+}
+
+.searchInput {
+  background-color: white;
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0em .5em;
+  box-sizing: content-box;
+  border: $grayline;
+
+
+
+  & input:focus {
+    outline: none;
+  }
+}

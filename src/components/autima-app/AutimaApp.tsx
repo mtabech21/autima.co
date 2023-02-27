@@ -1,5 +1,5 @@
-import React, { LegacyRef, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import HomeView from "./pages/home-view/HomeView";
 import { Topbar } from "./topbar/Topbar";
 import Sidebar from "./sidebar/Sidebar";
@@ -7,8 +7,6 @@ import StoresView from "./pages/stores/StoresView";
 import SingleStoreView from "./pages/stores/components/SingleStoreView";
 import styles from  "./app.module.scss"
 import Loading from "../loading/Loading";
-import { getFunctions, httpsCallable } from "firebase/functions";
-import { app } from "../../App";
 import EmployeesView from "./pages/employees/EmployeesView";
 import EmployeeOnboardView from "./pages/employees/onboarding/EmployeeOnboardView";
 import useCompany, { CompanyContext, businessUID } from "../../hooks/useCompany";
@@ -16,6 +14,7 @@ import { companyContext } from "../../hooks/useCompany";
 import MyBusinessView from "./pages/mybusiness/MyBusinessView";
 import useProfile, { profileContext } from "../../hooks/useProfile";
 import { User } from "firebase/auth";
+import SingleEmployeeView from "./pages/employees/single-employee/SingleEmployeeView";
 
 interface AppProps {
   user: User
@@ -52,11 +51,20 @@ interface EmployeeAppProps {
 
 const EmployeeApp = (props: EmployeeAppProps) => {
   const profile = useProfile(props.user)
+  
+  
+
 
   return (
     <profileContext.Provider value={profile}>
-      <button onClick={e => { e.preventDefault(); profile.setAsBusinessAccount() }}>CONVERT TO BUSINESS ACCOUNT</button>
-      
+      <div>
+        <button onClick={e => { e.preventDefault(); profile.setAsBusinessAccount() }}>CONVERT TO BUSINESS ACCOUNT</button>
+        {
+          profile.invites.map((v, i) => (
+            <button key={i} onClick={()=> profile.joinCompany(v)}>Join {v.companyId}</button>
+          ))
+        }
+      </div>
     </profileContext.Provider>
   )
 }
@@ -102,7 +110,8 @@ const AdminApp = (props: AdminAppProps) => {
         </Route>
         <Route path={"/employees"}>
           <Route path={""} element={<EmployeesView />}/>
-          <Route path={"onboard"} element={<EmployeeOnboardView/>}/>
+          <Route path={"onboard"} element={<EmployeeOnboardView />} />
+          <Route path={":uid"} element={<SingleEmployeeView />}/>
         </Route>
         <Route path={"/messages"}/>
         <Route path={"/tasks"}/>

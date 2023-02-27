@@ -29,7 +29,7 @@ export type CompanyID = string
 
 export type TaskboardSession = {
   clock: ClockSession,
-  branchID: BranchID
+  storeId: string
 }
 
 export type ClockSession = {

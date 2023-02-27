@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AiFillBell,
   AiFillMessage,
@@ -9,8 +9,10 @@ import {
 } from "react-icons/ai";
 import style from "./topbar.module.scss";
 import { useNavigate } from "react-router-dom";
+import { companyContext } from "../../../hooks/useCompany";
 
 export function Topbar() {
+  const company = useContext(companyContext)
   const navigate = useNavigate();
   return (
     <div className={style.topbar}>
@@ -41,7 +43,7 @@ export function Topbar() {
         <AiFillBell />
       </button>
       <div
-        onClick={() => navigate(`/taskboard/testKey`)}
+        onClick={() => navigate(`/taskboard/${company.id}`)}
         className={style.navToClockBtn}
       >
         <AiOutlineFieldTime title="Taskboard" />

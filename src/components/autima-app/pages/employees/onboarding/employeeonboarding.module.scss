@@ -1,0 +1,32 @@
+@import "../../../../../assets/colors";
+
+.wrapper {
+  min-width: min-content;
+  width: 70%;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+  border-radius: 1em;
+  border: $grayline;
+  padding: 3em;
+}
+
+.submitForm {
+  margin: 0.5em;
+  margin-top: 2em;
+  background-color: $blue;
+  border-radius: 10em;
+  height: 3em;
+  width: 8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+
+  &:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,79 @@
+@import "../../../../assets/_colors.scss";
+
+.header {
+  width: 100%;
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.wrapper {
+  margin: 2em;
+  width: 80%;
+  height: 100%;
+  margin-bottom: 2em;
+  overflow-y: scroll;
+  overflow: visible;
+  box-sizing: content-box;
+  min-width: fit-content;
+}
+
+.rightBarWrapper {
+  width: 20%;
+  height: 100%;
+  right: 0;
+  position: relative;
+  margin: 1em;
+}
+
+.rightBar {
+  position: fixed;
+  border-left: $grayline;
+  display: flex;
+  justify-content: left;
+  color: gray;
+  padding-left: 1em;
+  height: 100%;
+  flex-direction: column;
+  gap: .5em;
+
+  & div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.infoCard {
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: whitesmoke;
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 2em;
+  box-shadow: $shadow;
+}
+
+.editButton {
+  font-size: 1.2em;
+  color: $blue;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+  }
+
+}
+
+.positionsBtn {
+  width: min-content;
+  white-space: nowrap;
+  color: $blue;
+  font-size: .8em;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+  }
+}
