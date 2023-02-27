@@ -68,7 +68,7 @@ export type CompanyContext = {
 
 }
 
-const useCompany = (id: string): CompanyContext => {
+export const useCompany = (id: string): CompanyContext => {
   const [errors, setErrors] = useState([] as Error[])
   const [reloadListener, setReloadListener] = useState(false)
   const reload = () => { setReloadListener(prev => !prev) }

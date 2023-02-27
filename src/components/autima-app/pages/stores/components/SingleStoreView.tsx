@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import styles from "../stores.module.scss"
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { IoArrowBack } from "react-icons/io5"
-import { deleteDoc, doc } from "firebase/firestore"
-import { db } from "../../../../../App"
 import { companyContext } from "../../../../../hooks/useCompany"
 
 

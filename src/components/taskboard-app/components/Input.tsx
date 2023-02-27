@@ -19,6 +19,7 @@ const Input = forwardRef((props, ref: React.ForwardedRef<HTMLInputElement>) => {
     getId(input)
     setInput("")
   };
+  
   const getId = (from: string) => {
 
     let ids = session.clock.localIds
