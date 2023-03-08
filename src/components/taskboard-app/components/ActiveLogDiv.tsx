@@ -56,9 +56,7 @@ function ActiveLogDiv(props: ALDProps) {
     var result = {} as ProfileInfo
     let profileRef = doc(db,"profiles", props.data.uid)
     await getDoc(profileRef).then((snap) => {
-      console.log(props.data.uid)
       if (snap.exists()) {
-        console.log(snap.data())
         result = snap.data() as ProfileInfo
       }
     })
@@ -72,8 +70,8 @@ function ActiveLogDiv(props: ALDProps) {
   },[])
 
   function getLatestStatus(): PunchData {
-    if (props.data.latestActivity != null) {
-      return props.data.latestActivity[props.data.latestActivity.length - 1]
+    if (props.data.punches != null) {
+      return props.data.punches[props.data.punches.length - 1]
     } else {
       return {} as PunchData
     }
@@ -148,7 +146,7 @@ function ActiveLogDiv(props: ALDProps) {
           {getStringFromType(getLatestStatus().type)}
         </div> }
       </div>
-      {props.data.latestActivity ? reveal && <LogHistory data={props.data.latestActivity} /> : null }
+      {props.data.punches ? reveal && <LogHistory data={props.data.punches} /> : null }
     </div>
   )
 

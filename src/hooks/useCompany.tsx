@@ -25,6 +25,7 @@ export interface CompanyInfo {
 
 export interface StoreInfo {
   storeId: string,
+  companyId: string,
   branchId: string,
   cityName: string,
   address?: string,
@@ -152,6 +153,7 @@ export const useCompany = (id: string): CompanyContext => {
 
   const listStores = useCallback(async (): Promise<StoreInfo[]> => {
     var results: StoreInfo[] = [{
+      companyId: id,
       storeId: id,
       branchId: "Company",
       cityName: ""
@@ -167,17 +169,17 @@ export const useCompany = (id: string): CompanyContext => {
     return results
   },[stores])
   
-  const getEmployees: (store?: string) => Promise<AutimaEmployee[]> = useCallback(async (store?: string) => {
+  const getEmployees: (stores?: string[]) => Promise<AutimaEmployee[]> = useCallback(async (store?: string[]) => {
     var result: AutimaEmployee[] = []
-    const queryC: QueryConstraint[] = [where("companyId", "==", id)]
+    const queryC: QueryConstraint[] = []
     if (store != null) {
-      queryC.push(where("storeId","==",store))
+      stores.forEach(store => {
+        queryC.push(where("storeId","==",store))
+      });
     }
-    const employeesQ = query(collection(db, "profiles"), ...queryC )
+    const employeesQ = query(collection(db, "companies", id, "employees"), ...queryC )
     await getDocs(employeesQ).then(snap => {
-      
       snap.forEach(sn => {
-      
         let data = sn.data()
         result.push({
           uid: sn.id,

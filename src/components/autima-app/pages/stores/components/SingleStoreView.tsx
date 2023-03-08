@@ -23,6 +23,7 @@ const SingleStoreView = () => {
           e.preventDefault()
           company.deleteStore(storeId!)
         }}>Delete Store</button>
+        <button onClick={() => nav(`/taskboard/${storeId}`)} >STORE TASKBOARD</button>
       </div>
     </>
   )

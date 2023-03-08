@@ -23,7 +23,6 @@ const Selection = forwardRef((props: SelectionProps, ref) => {
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
-        console.log("PUNCHING")
       session.clock.punch(session.clock.selectingTypeFor!, props.type)
       session.clock.setSelectingTypeFor(null)
     }}
@@ -56,7 +55,6 @@ const SelectionDiv = (props) => {
   const session = useContext(taskboardContext)
   const [selection, setSelection] = useState(0)
   const handleSelection = (e: any) => {
-    console.log(e.key)
     if (e.key == "ArrowRight") {
       setSelection(prev => {
         if (prev%4 < 3) {
@@ -101,7 +99,6 @@ const SelectionDiv = (props) => {
   
   useEffect(() => {
     window.addEventListener("keydown", e => handleSelection(e), {once: true})
-    console.log(selection)
     if (refs[selection % 4] != null) {
       //@ts-ignore
       refs[selection%4].current.focus()

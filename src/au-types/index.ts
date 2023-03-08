@@ -1,5 +1,6 @@
 
 import FS from "firebase/firestore"
+import { AutimaEmployee, StoreInfo } from "../hooks/useCompany"
 
 //AUTIMA TYPES
 export type AUEmployee = {
@@ -29,7 +30,10 @@ export type CompanyID = string
 
 export type TaskboardSession = {
   clock: ClockSession,
-  storeId: string
+  store: StoreInfo,
+  tasks: Task[]
+  employees: AutimaEmployee[]
+  online: boolean
 }
 
 export type ClockSession = {
@@ -39,7 +43,9 @@ export type ClockSession = {
   activeUsers: ActiveUser[]
   selectingTypeFor: string | null
   setSelectingTypeFor: React.Dispatch<React.SetStateAction<string | null>>
-  localIds: Object
+  localIds: Object,
+  publish: () => void,
+  updateListener: boolean
 }
 
 
@@ -52,26 +58,56 @@ export type PunchData = {
   time: FS.Timestamp
 }
 export type Timecard = {
-  userID: UserID
+  uid: UserID
   date: FS.Timestamp
   punches: [PunchData] | FS.FieldValue
-  signedOff?: UserID
 }
 export class ActiveUser {
   uid: UserID
   branchID: BranchID
   fullName: string
-  latestActivity: PunchData[]
+  punches: PunchData[]
 
-  constructor(uid: UserID, latestActivity: PunchData[], fullName: string, branchID: BranchID) {
+  constructor(uid: UserID, punches: PunchData[], fullName: string, branchID: BranchID) {
     this.uid = uid
-    this.latestActivity = latestActivity
+    this.punches = punches
     this.fullName = fullName
     this.branchID = branchID
   }
 }
 
+export type Task = {
+  dateAdded: FS.Timestamp,
+  dateDue: FS.Timestamp,
+  title: string,
+  body: string,
+  status: TaskStatus,
+  hours?: number,
+  assignedTo?: [UserID]
+}
 
+export enum TaskStatus {
+  new, seen, completed, overdue, dueSoon, important
+}
+
+export function TaskStatusFrom(num: number): TaskStatus {
+  switch (num) {
+    case TaskStatus.completed.valueOf():
+      return TaskStatus.completed
+    case TaskStatus.dueSoon.valueOf():
+      return TaskStatus.dueSoon
+    case TaskStatus.important.valueOf():
+      return TaskStatus.important
+    case TaskStatus.new.valueOf():
+      return TaskStatus.new
+    case TaskStatus.overdue.valueOf():
+      return TaskStatus.overdue
+    case TaskStatus.seen.valueOf():
+      return TaskStatus.seen
+    default:
+      return TaskStatus.seen
+  }
+}
 
 export function PunchTypeFrom(num: number): PunchType {
   switch (num) {

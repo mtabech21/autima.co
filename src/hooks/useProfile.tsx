@@ -110,24 +110,25 @@ const useProfile = (user: User): ProfileContext => {
     return result
   }, [reloadListener])
 
-  function joinCompany(invite: Invite) {
+  async function joinCompany(invite: Invite) {
     const userRef = doc(db, "profiles", user.uid)
     const companyRef = doc(db, "companies", invite.companyId)
+    const employeeDoc = doc(companyRef, "employees", user.uid)
       
-    setDoc(userRef, {
+    await setDoc(userRef, {
       position: invite.position,
         storeId: invite.storeId,
         companyId: invite.companyId,
         
-      } as AutimaEmployee, { merge: true }).then((v) => {
+      } as AutimaEmployee, { merge: true }).then( async () => {
         const invitesQ = query(collection(db, "invites"), where("userEmail", "==", user.email))
-        getDocs(invitesQ).then(snap => {
+        await getDocs(invitesQ).then(snap => {
           snap.forEach((v) => {
             deleteDoc(v.ref)
           })
-        }).then(() => {
-          console.log("INVITES DELETED")
         })
+      }).finally(async () => {
+        await setDoc(employeeDoc, info)
       })
     updateDoc(companyRef,`localIds.${invite.localId}`, user.uid)
   }

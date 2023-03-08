@@ -1,12 +1,15 @@
-import React, {createContext, useState, useContext} from "react";
+import React, {createContext, useState, useContext, useEffect} from "react";
 import style from "../clockapp.module.scss"
-import { IoAlertCircleOutline, IoCheckbox, IoLayers, IoLayersOutline, IoTimeOutline } from "react-icons/io5";
+import { IoAlertCircleOutline, IoCheckbox, IoLayers, IoLayersOutline, IoPerson, IoTimeOutline } from "react-icons/io5";
+import { taskboardContext } from "../TaskboardApp";
+import { Task } from "../../../au-types";
 
 const filterContext = createContext<any>({})
 
 function Taskboard() {
   const [filter, setFilter] = useState("All");
-  
+  const taskboard = useContext(taskboardContext)
+  const [selectedTask, setSelectedTask] = useState(taskboard.tasks[0])
   return (
     <div className={style.taskboard}>
       <div className={style.taskWindow}>
@@ -27,10 +30,19 @@ function Taskboard() {
             </FilterButton>
           </div>
           </filterContext.Provider>
-          <div className={style.filterTop}>{filter}</div>
+          <div className={style.taskListContainer}>
+            <div className={style.filterTop}>{filter}</div>
+            <div className={style.taskList}>
+              {
+                taskboard.tasks.map((task,i) => (
+                  <SingleTask task={task} key={i} onClick={() => setSelectedTask(task)}/>
+                ))
+              }
+            </div>
+          </div>
         </div>
         <div>
-
+          {JSON.stringify(selectedTask)}
         </div>
       </div>
     </div>
@@ -40,6 +52,35 @@ function Taskboard() {
 interface Props {
   children: JSX.Element
   name: string
+}
+interface SingleTaskProp {
+  task: Task,
+  onClick: () => void
+}
+function SingleTask(props: SingleTaskProp) {
+  const tb = useContext(taskboardContext)
+  const [showAssignedTo, setShowAssignedTo] = useState(false)
+
+  return (
+    <div className={style.singleTask} onClick={props.onClick}>
+      <div style={{width: ".5em", background: "green"}}/>
+      <div style={{padding: "1em", width: "100%"}}>
+        <div style={{fontWeight: "bold"}}>{props.task.title}</div>
+        <div>By {props.task.dateDue.toDate().toLocaleDateString()}</div>
+      </div>
+      <div style={{ color: "gray", fontFamily: "monospace", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        {props.task.assignedTo &&
+          <IoPerson style={{ fontSize: "1.2em", margin: "1em" }} onMouseEnter={() => setShowAssignedTo(true)} onMouseLeave={() => setShowAssignedTo(false)} />
+        }
+        {showAssignedTo && <div className={style.assignedTo}>
+          {props.task.assignedTo?.map(v => (
+            v
+          ))}
+        </div>}
+      </div>
+      
+    </div>
+  )
 }
 
 function FilterButton(props: Props)  {
@@ -54,14 +95,6 @@ function FilterButton(props: Props)  {
   )
 }
 
-const topStyle = {
-  position: "relative",
-  backgroundColor: "rgb(20,105,185)",
-  minWidth: "100%",
-  minHeight: "5em",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+
 
 export default Taskboard;

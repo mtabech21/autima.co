@@ -46,9 +46,7 @@ function App() {
                 path="*"
                 element={<a href="/testKey">YOUR CLOCK</a>}
               />
-              <Route path={`:branchKey`}>
-                  <Route path={``} element={<TaskboardApp user={current.user} />} />
-              </Route>
+                <Route path={`:storeKey`} element={<TaskboardApp user={current.user}/>} />
             </Route>
             {/* /////////**/}
           </Routes>

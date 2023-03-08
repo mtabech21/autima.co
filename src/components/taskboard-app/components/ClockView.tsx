@@ -68,11 +68,12 @@ function ClockView() {
 }
 
 function ConnectionStatus() {
+  const tb = useContext(taskboardContext)
   return (
     <div style={{ width: "100%" }} className={style.onlineStatusInApp}>
-      Online
-      <AiOutlineGlobal style={{ height: "20px", color: "green" }} />-
-      <span style={{ color: "black", fontWeight: 500 }}>68561</span> (Brossard)
+      {tb.online ? "Online" : "Offline"}
+      <AiOutlineGlobal style={{ height: "20px", color:  `${tb.online? "green" : "red"}`}} />-
+      <span style={{ color: "black", fontWeight: 500 }}>{tb.store.branchId}</span> ({tb.store.cityName})
     </div>
   );
 }

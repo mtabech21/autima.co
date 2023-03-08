@@ -233,8 +233,7 @@
 
 .sideSelectionMenu {
   height: 100%;
-  width: 25%;
-  min-width: 10em;
+  min-width: 20em;
   background-color: whitesmoke;
   border-right: $grayline;
   display: flex;
@@ -317,4 +316,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.singleTask {
+  background-color: white;
+  border-bottom: $grayline;
+  display: flex;
+  min-width: fit-content;
+  overflow: hidden;
+  font-family: monospace;
+
+  &:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+  }
+}
+
+.assignedTo {
+  position: absolute;
+  transform: translateY(-3em);
+  background-color: white;
+  border-radius: 1em;
+  border: $grayline;
+  color: black;
+  padding: .5em;
+  opacity: 0.8;
+}
+
+.taskListContainer {
+  width: 100%;
 }

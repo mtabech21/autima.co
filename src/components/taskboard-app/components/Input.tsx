@@ -25,7 +25,6 @@ const Input = forwardRef((props, ref: React.ForwardedRef<HTMLInputElement>) => {
     let ids = session.clock.localIds
     if (from.length > 0) {
       Object.keys(ids).forEach((v, i) => {
-        console.log(v)
         if (v === from) {
           session.clock.setSelectingTypeFor(Object.values(ids).at(i))
         }
