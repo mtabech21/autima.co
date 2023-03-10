@@ -50,7 +50,7 @@ const EmployeesView = () => {
             </div>
             <div className={styles.employeesList}>
               {company.pendingInvites.map((v, i) => (
-                <InviteRow uid={""}  position={v.position} key={i} localId={v.localId} branch={v.storeId} fullName={v.userEmail} alerts={[EmployeeAlertType.pending]}/>
+                <InviteRow uid={""}  position={v.position} key={i} localId={v.localId} branch={v.storeId} fullName={v.userEmail} />
               ))}
             </div>
           </div>
@@ -68,39 +68,9 @@ const EmployeesView = () => {
             </div>
             <div className={styles.employeesList}>
               {company.employees.map((v, i) => (
-                <EmployeeRow uid={v.uid}  key={i} position={v.position} alerts={v.alerts} branch={v.branchId} fullName={`${v.firstName} ${v.lastName}`} localId={"000"} />
+                <EmployeeRow uid={v.uid}  key={i} position={v.position} branch={v.branchId} fullName={`${v.firstName} ${v.lastName}`} localId={v.localId} />
               ))}
             </div>
-          </div>
-        </div>
-        <div className={styles.rightBarWrapper}>
-          <div className={styles.rightBar}>
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-            <br />
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-            <br />
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
           </div>
         </div>
       </div>
@@ -115,7 +85,6 @@ interface EmployeeRowProps {
   fullName: string,
   branch: string,
   position: string,
-  alerts: EmployeeAlertType[]
 
 }
 
@@ -132,12 +101,6 @@ const EmployeeRow = (props: EmployeeRowProps) => {
       <div id={styles["name"]}>{props.fullName}</div>
       <div id={styles["branchId"]}>{props.branch}</div>
       <div id={styles["position"]}>{props.position}</div>
-      <div id={styles["alert"]}>
-        {props.alerts.map((v) => (
-          <IoAlertCircle style={{color: v}}/>
-        ))
-        }
-      </div>
       <div id={styles["link"]}></div>
       </div>
   )
@@ -150,12 +113,6 @@ const InviteRow = (props: EmployeeRowProps) => {
       <div className={styles.employeeRow}>
       <div id={styles["localId"]}>{props.localId}</div>
       <div id={styles["name"]}>{props.fullName}</div>
-      <div id={styles["alert"]}>
-        {props.alerts.map((v) => (
-          <IoAlertCircle style={{color: v}}/>
-        ))
-        }
-      </div>
       <div id={styles["position"]}>{props.position}</div>
       <div id={styles["branchId"]}>{props.branch}</div>
       <div id={styles["link"]}></div>

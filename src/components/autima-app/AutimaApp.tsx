@@ -36,6 +36,7 @@ function AutimaApp(props: AppProps) {
       {
          view
       }
+      
     </>
   );
 
@@ -117,8 +118,11 @@ const AdminApp = (props: AdminAppProps) => {
         <Route path={"/tasks"}/>
         <Route path={"/mybusiness"} element={<MyBusinessView />} />
         <Route path={"/support"} element={<TestElement/>}/>
-      </Routes>
+        </Routes>
+
+        
     </div>
+      
     </companyContext.Provider>
   )
 }
@@ -168,5 +172,42 @@ const TestElement = () => {
     </form>
   )
 }
+
+
+const RightToolBar = () => {
+  return (
+    <div className={styles.rightBarWrapper}>
+          <div className={styles.rightBar}>
+            <div>Upcoming Tools</div>
+            <br />
+            <div>...Tool1</div>
+            <div>...Tool2</div>
+            <div>...Tool3</div>
+            <div>...Tool4</div>
+            <div>...Tool5</div>
+            <br />
+            <br />
+            <div>Upcoming Tools</div>
+            <br />
+            <div>...Tool1</div>
+            <div>...Tool2</div>
+            <div>...Tool3</div>
+            <div>...Tool4</div>
+            <div>...Tool5</div>
+            <br />
+            <br />
+            <div>Upcoming Tools</div>
+            <br />
+            <div>...Tool1</div>
+            <div>...Tool2</div>
+            <div>...Tool3</div>
+            <div>...Tool4</div>
+            <div>...Tool5</div>
+            <br />
+          </div>
+        </div>
+  )
+}
+
 
 export default AutimaApp;

@@ -74,12 +74,11 @@ const useClock = (store: StoreInfo): ClockSession => {
     })
     if (result.length == 0) {
       activeUsers.forEach((user) => {
-        const docRef = doc(db, "timecards", `${Timestamp.now().valueOf()}_${user.uid}`)
+        const docRef = doc(db,"companies",store.companyId, "employees",user.uid,"timecards", Timestamp.now().valueOf())
         let time = new Date(user.punches[0].time.toDate())
         time.setHours(0, 0, 0, 0)
         
         let date = Timestamp.fromDate(time)
-        console.log(date)
         setDoc(docRef, {
           date: date,
           uid: user.uid,
@@ -317,7 +316,7 @@ const useTasks = (store: StoreInfo) => {
       dateDue: Timestamp.fromDate(new Date()),
       status: TaskStatus.new,
       hours: 50,
-      assignedTo: ["BjaJWVTlupPjG8cjLuWSLmwowle2"]
+      assignedTo: "uP01mn3fj8YCpQLJ5jxYIKGN04E3"
     } as Task)
     getDocs(tasksQ).then(snaps => {
       snaps.forEach((snap) => {

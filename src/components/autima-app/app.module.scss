@@ -22,3 +22,39 @@
   overflow: visible;
   max-width: 100%;
 }
+
+.rightBarWrapper {
+  width: 25%;
+  height: 100%;
+  right: 0;
+  position: relative;
+  margin: 1em;
+}
+
+.wrapper {
+  margin: 2em;
+  max-width: 75%;
+  min-width: 75%;
+  height: 100%;
+  margin-bottom: 2em;
+  overflow-y: scroll;
+  overflow: visible;
+  box-sizing: content-box;
+}
+
+.rightBar {
+  position: fixed;
+  border-left: $grayline;
+  display: flex;
+  justify-content: left;
+  color: gray;
+  padding-left: 1em;
+  height: 100%;
+  flex-direction: column;
+  gap: .5em;
+
+  & div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

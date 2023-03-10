@@ -2,7 +2,7 @@ import { QueryConstraint, addDoc, collection, deleteDoc, doc, getDoc, getDocs, q
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { db } from "../App"
 import { useNavigate } from "react-router-dom"
-import { FieldPath, FieldValue } from "firebase-admin/firestore"
+import { FieldPath, FieldValue, Timestamp } from "firebase-admin/firestore"
 import { remove } from "firebase/database"
 import { EmployeeAlertType } from "../components/autima-app/pages/employees/EmployeesView"
 
@@ -38,7 +38,11 @@ export interface AutimaEmployee {
   firstName: string,
   lastName: string,
   position: string,
-  alerts: EmployeeAlertType[]
+  localId: string,
+  joinDate: Timestamp,
+  hireDate: Timestamp,
+  salary?: number,
+
 }
 
 export type Invite = {
@@ -109,7 +113,7 @@ export const useCompany = (id: string): CompanyContext => {
     getPendingInvites().then(res => {
       setPendingInvites(res as Invite[])
     })
-    return 
+    return
   }, [reloadListener])
   
   const getStores: () => Promise<AutimaStore[]> = useCallback(async () => {
@@ -180,17 +184,9 @@ export const useCompany = (id: string): CompanyContext => {
     const employeesQ = query(collection(db, "companies", id, "employees"), ...queryC )
     await getDocs(employeesQ).then(snap => {
       snap.forEach(sn => {
-        let data = sn.data()
-        result.push({
-          uid: sn.id,
-          storeId: data.storeId,
-          branchId: data.branchId,
-          companyId: data.companyId,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          position: data.position,
-          alerts: []
-        })
+        let data = sn.data() as AutimaEmployee
+        data.uid = sn.id
+        result.push(data)
       })
 
     })

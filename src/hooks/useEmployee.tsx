@@ -4,34 +4,38 @@ import { useNavigate } from "react-router-dom"
 import { db } from "../App"
 import { ProfileInfo } from "./useProfile"
 import { StoreInfo } from "./useCompany"
+import useTimecards from "./useTimecards"
+import { Timestamp } from "firebase/firestore"
 
 
 
 
-interface EmployeeContext {
-  reload: () => void,
-  info: ProfileInfo,
-  store: StoreInfo,
-  terminateEmployment: () => void
-
-}
 
 
 
-const useEmployee = (uid: string): EmployeeContext => {
+
+const useEmployee = (uid: string) => {
   const [errors, setErrors] = useState([] as Error[])
   const [reloadListener, setReloadListener] = useState(false)
   const reload = () => { setReloadListener(prev => !prev) }
 
   const nav = useNavigate()
+  
 
   const [info, setInfo] = useState({} as ProfileInfo)
   const [store, setStore] = useState({} as StoreInfo)
+
+  const timecards = useTimecards(info)
 
   useEffect(() => {
     getEmployee().then(res => {
       setInfo(res)
     })
+    timecards.setDateInterval({
+      from: Timestamp.fromMillis(0).toDate(),
+      to: Timestamp.now().toDate()
+    })
+    timecards.reload()
   }, [reloadListener])
 
   const getEmployee: () => Promise<ProfileInfo> = useCallback(async () => {
@@ -41,6 +45,7 @@ const useEmployee = (uid: string): EmployeeContext => {
     await getDoc(employeeDoc).then(snap => {
       if (snap.exists()) {
         result = snap.data() as ProfileInfo
+        result.uid = snap.id
         getStore(result.storeId).then(res => {
           setStore(res)
         })
@@ -74,7 +79,7 @@ const useEmployee = (uid: string): EmployeeContext => {
     }
   }
 
-  return { reload, info, store, terminateEmployment }
+  return { reload, info, store, terminateEmployment, timecards }
 
 }
 

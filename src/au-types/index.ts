@@ -60,7 +60,7 @@ export type PunchData = {
 export type Timecard = {
   uid: UserID
   date: FS.Timestamp
-  punches: [PunchData] | FS.FieldValue
+  punches: [PunchData]
 }
 export class ActiveUser {
   uid: UserID
@@ -77,13 +77,20 @@ export class ActiveUser {
 }
 
 export type Task = {
+  addedBy: UserID
   dateAdded: FS.Timestamp,
   dateDue: FS.Timestamp,
   title: string,
   body: string,
   status: TaskStatus,
   hours?: number,
-  assignedTo?: [UserID]
+  checkList?: CheckEntity[]
+  assignedTo?: UserID
+}
+
+export type CheckEntity = {
+  body: string,
+  checked: boolean
 }
 
 export enum TaskStatus {

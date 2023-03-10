@@ -15,7 +15,7 @@ export type ProfileInfo = {
   companyId: string
   storeId: string,
   position: string,
-  
+  uid: string
 }
 
 interface ProfileContext {
@@ -116,9 +116,9 @@ const useProfile = (user: User): ProfileContext => {
     const employeeDoc = doc(companyRef, "employees", user.uid)
       
     await setDoc(userRef, {
-      position: invite.position,
-        storeId: invite.storeId,
-        companyId: invite.companyId,
+       position: invite.position,
+       storeId: invite.storeId,
+       companyId: invite.companyId,
         
       } as AutimaEmployee, { merge: true }).then( async () => {
         const invitesQ = query(collection(db, "invites"), where("userEmail", "==", user.email))
@@ -128,7 +128,9 @@ const useProfile = (user: User): ProfileContext => {
           })
         })
       }).finally(async () => {
-        await setDoc(employeeDoc, info)
+        let data = info as AutimaEmployee
+        data.localId = invite.localId
+        await setDoc(employeeDoc, data)
       })
     updateDoc(companyRef,`localIds.${invite.localId}`, user.uid)
   }

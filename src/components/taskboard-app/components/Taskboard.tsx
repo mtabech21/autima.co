@@ -1,4 +1,4 @@
-import React, {createContext, useState, useContext, useEffect} from "react";
+import React, {createContext, useState, useContext, useEffect, useCallback} from "react";
 import style from "../clockapp.module.scss"
 import { IoAlertCircleOutline, IoCheckbox, IoLayers, IoLayersOutline, IoPerson, IoTimeOutline } from "react-icons/io5";
 import { taskboardContext } from "../TaskboardApp";
@@ -49,6 +49,11 @@ function Taskboard() {
   );
 }
 
+
+const TaskDetails = (props: { task: Task }) => {
+  
+}
+
 interface Props {
   children: JSX.Element
   name: string
@@ -60,7 +65,15 @@ interface SingleTaskProp {
 function SingleTask(props: SingleTaskProp) {
   const tb = useContext(taskboardContext)
   const [showAssignedTo, setShowAssignedTo] = useState(false)
-
+  const getNameFromUid = useCallback((uid: string): string => {
+    tb.employees.forEach(employee => {
+      console.log(employee)
+      if (employee.uid == uid) {
+        return `${employee.firstName} ${employee.lastName}`
+      }
+    })
+    return `UID: ${uid} (ERROR)`
+  },[tb.employees])
   return (
     <div className={style.singleTask} onClick={props.onClick}>
       <div style={{width: ".5em", background: "green"}}/>
@@ -69,16 +82,13 @@ function SingleTask(props: SingleTaskProp) {
         <div>By {props.task.dateDue.toDate().toLocaleDateString()}</div>
       </div>
       <div style={{ color: "gray", fontFamily: "monospace", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        {props.task.assignedTo &&
+        { props.task.assignedTo &&
           <IoPerson style={{ fontSize: "1.2em", margin: "1em" }} onMouseEnter={() => setShowAssignedTo(true)} onMouseLeave={() => setShowAssignedTo(false)} />
         }
-        {showAssignedTo && <div className={style.assignedTo}>
-          {props.task.assignedTo?.map(v => (
-            v
-          ))}
-        </div>}
+        {(showAssignedTo && props.task.assignedTo) && <div className={style.assignedTo}>
+          {getNameFromUid(props.task.assignedTo)}
+        </div> }
       </div>
-      
     </div>
   )
 }
