@@ -24,32 +24,14 @@ function ClockView() {
   });
   
 
-  const [isFullscreen, setIsFullscreen] = React.useState(false);
-
-  // Watch for fullscreenchange
-  useEffect(() => {
-    function onFullscreenChange() {
-      setIsFullscreen(Boolean(document.fullscreenElement));
-    }
-
-    document.addEventListener("fullscreenchange", onFullscreenChange);
-
-    return () => {
-      document.removeEventListener("fullscreenchange", onFullscreenChange);
-      document.exitFullscreen();
-    };
-  }, []);
   //INPUT REF
   const inputRef = useRef<React.ForwardedRef<HTMLInputElement>>() as React.ForwardedRef<HTMLInputElement>;
   //REACT ROUTER
-  const navigate = useNavigate();
 
   return (
     <div className={style.clock}>
       <div className={style.topStyle}>
-        <BackButton action={() => navigate("/")} />
         <Logo />
-        <FullScreenButton screenState={isFullscreen} />
       </div>
       <ConnectionStatus />
       <Clock />
@@ -78,16 +60,7 @@ function ConnectionStatus() {
   );
 }
 
-interface BBProp {
-  action: ()=>void
-}
-function BackButton(props: BBProp) {
-  return (
-    <button className={style.navButton} onClick={props.action}>
-      <IoArrowBack />
-    </button>
-  );
-}
+
 
 function Logo() {
   return (
@@ -101,30 +74,13 @@ function Logo() {
     >
       <img
         style={{
-          width: "10em",
+          height: "100%",
+          padding: ".5em"
         }}
         src={logo}
         alt="logo"
       />
     </div>
-  );
-}
-
-interface FSBProp {
-  screenState: boolean
-}
-function FullScreenButton(props: FSBProp) {
-  return (
-    <button
-      className={style.navButton}
-      onClick={() => {
-        !props.screenState
-          ? document.body.requestFullscreen()
-          : document.exitFullscreen();
-      }}
-    >
-      <IoScanOutline />
-    </button>
   );
 }
 
@@ -141,15 +97,6 @@ function BottomBar() {
   );
 }
 
-const topStyle = {
-  position: "relative",
-  backgroundColor: "rgb(20,20,20)",
-  minWidth: "100%",
-  height: "4em",
-  borderRight: "1px solid black",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+
 
 export default ClockView;

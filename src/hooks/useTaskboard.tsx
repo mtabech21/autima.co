@@ -21,6 +21,7 @@ const useTaskboard = (store: StoreInfo): TaskboardSession => {
     getEmployees().then(res => {
       setEmployees(res)
     })
+    
   }, [store])
   
   const getEmployees: () => Promise<AutimaEmployee[]> = useCallback(async () => {
@@ -201,7 +202,6 @@ const usePunch = (store: StoreInfo) => {
   const getLocalIds: (companyId: string) => Promise<Object> = useCallback(async (companyId: string) => {
     var result = {}
     await getDoc(doc(db, "companies", companyId)).then(snap => {
-        console.log(companyId)
         if (snap.exists()) {
           let data = snap.data()
           result = data.localIds
@@ -216,7 +216,6 @@ const usePunch = (store: StoreInfo) => {
     
     getLocalIds(store.companyId).then(res => {
       setLocalIds(res)
-      console.log(res)
     })
     let unsub = onSnapshot(activesQ, (snap) => {
       snap.docChanges().forEach(change => {
@@ -270,7 +269,9 @@ const usePunch = (store: StoreInfo) => {
     const activeRef = doc(db, "companies", store.companyId, "actives", user)
     const punchData: PunchData = {} as PunchData
     const tc: Timecard = {} as Timecard
-    punchData.time = Timestamp.now()
+    let data = new Date
+    data.setSeconds(0,0)
+    punchData.time = Timestamp.fromDate(data)
     switch (type) {
       case PunchType.in:
         punchData.type = PunchType.in

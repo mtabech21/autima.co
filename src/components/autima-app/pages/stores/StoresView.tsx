@@ -1,17 +1,14 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import NewStoreForm from "./components/NewStoreForm";
-import { IoAddOutline, IoAddSharp } from "react-icons/io5";
+import { IoAddOutline, IoAddSharp, IoPeople, IoRadio, IoRadioButtonOff, IoRadioButtonOn } from "react-icons/io5";
 import styles from "./stores.module.scss"
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { companyContext } from "../../../../hooks/useCompany";
+import { StoreInfo, companyContext } from "../../../../hooks/useCompany";
+import useLiveStore from "../../../../hooks/useLiveStore";
+import { ActiveUser } from "../../../../au-types";
 
 
-interface AutimaStore {
-  storeId: string
-  branchId: string
-  cityName: string
-}
 
 
 
@@ -21,8 +18,8 @@ function StoresView() {
 
   return (
     <>
-    {showNewStoreForm && <div className={styles.newStoreForm}><NewStoreForm closeButtonDo={() => setShowNewStoreForm(false)}/></div>}
-      <div style={{ background: "white", display: "flex", overflow: "clip"}}>
+    
+      <div style={{display: "flex"}}>
         <div className={styles.wrapper }>
           <div className={styles.gridHeader}><div>Stores</div><div title="Add Store" className={styles.headerAddBtn} onClick={()=>setShowNewStoreForm(true)}><FaPlus /></div></div>
           <br />
@@ -30,43 +27,14 @@ function StoresView() {
           <br />
           <div className={styles.storesGrid}>
             {company.stores.length > 0 ? 
-              company.stores.sort((a, b) =>  a.branchId.localeCompare(b.branchId) ).map((store, i, arr) =>
-                <StoreCard branchId={store.branchId} cityName={store.cityName} storeId={store.storeId} key={i} />
+              company.stores.sort((a, b) =>  a.branchId.localeCompare(b.branchId) ).map((store) =>
+                <StoreCard key={store.branchId} store={store} />
               ) :
                 <StoreCardAdd onClick={() => setShowNewStoreForm(true)}/>
             }
           </div>
         </div>
-        <div className={styles.rightBarWrapper}>
-          <div className={styles.rightBar}>
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-            <br />
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-            <br />
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-          </div>
-        </div>
+        {showNewStoreForm && <div className={styles.newStoreForm}><NewStoreForm closeButtonDo={() => setShowNewStoreForm(false)}/></div>}
       </div>
     </>
   );
@@ -75,17 +43,47 @@ function StoresView() {
 
 
 
-const StoreCard: React.FC<AutimaStore> = (store) => {
+const StoreCard = (props: {store: StoreInfo}) => {
   const nav = useNavigate()
+  const current = useLiveStore(props.store)
+
+
+
   return (
-    <div className={styles.storeCard} onClick={() => nav(store.storeId)}>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", fontSize: "1em", padding: "1em"}}>
-        <div style={{ fontWeight: "bold", width: "100%" }}>{store.branchId}</div>
-        <div style={{ width: "100%", textAlign: "end" }}>{store.cityName}</div>
+    <div className={styles.storeCard} onClick={() => nav(props.store.storeId)}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "top", fontSize: "1em"}}>
+        <div>
+          <div style={{ fontWeight: "bold", width: "100%" }}>{props.store.branchId}</div>
+          <div>{props.store.cityName}</div>
+        </div>
+        <div style={{ width: "100%", textAlign: "end", color: `${current.online ? "green" : "red"}` }}>{!current.online ? <IoRadioButtonOn /> : <IsOnline employees={current.activeUsers}/>}</div>
       </div>
     </div>
   )
 }
+
+const IsOnline = (props: { employees: ActiveUser[] }) => {
+  const [showActive, setShowActive] = useState(false)
+  return (
+    <div onMouseEnter={()=>setShowActive(false)} onMouseLeave={()=>setShowActive(false)} style={{textAlign: "end"}}>
+      <><IoPeople />{showActive && <ActiveList employees={props.employees}/>}</>
+      <div>{props.employees.length}</div>
+      
+    </div>
+  )
+}
+
+const ActiveList = (props: { employees: ActiveUser[] }) => {
+  
+  return (
+    <div style={{ position: "absolute", textAlign: "start" }}>
+      {props.employees.map(emp => (
+        <div>{emp.uid}</div>
+      ))}
+    </div>
+  )
+}
+
 interface AddStoreProp {
   onClick: () => void
 }

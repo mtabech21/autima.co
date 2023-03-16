@@ -1,6 +1,6 @@
 import style from "./clockapp.module.scss";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ClockView from "./components/ClockView";
 import Taskboard from "./components/Taskboard";
 import Topmenu from "./components/Topmenu";
@@ -13,6 +13,7 @@ import { User } from "firebase/auth";
 import Loading from "../loading/Loading";
 import { doc, getDoc } from "firebase/firestore";
 import {db} from "../../App"
+import { IoArrowBack, IoScanOutline } from "react-icons/io5";
 
 export const taskboardContext = createContext<TaskboardSession>({} as TaskboardSession)
 
@@ -27,18 +28,17 @@ function TaskboardApp(props: TaskboardAppProps) {
     getStore().then(res => {
       setStore(res)
     })
-  },[])
+    document.body.requestFullscreen()
+  }, [])
+
   const getStore: () => Promise<StoreInfo> = async () => {
     let result = {} as StoreInfo
     let snap = await getDoc(doc(db, "stores", storeKey!))
     if (snap.exists()) {
-      console.log(snap.data())
       let store = snap.data() as StoreInfo
       store.storeId = snap.id
-      console.log(store)
       return store
     } else {
-      console.log("shouldnt go here")
       snap = await getDoc(doc(db, "companies", storeKey!))
       if (snap.exists()) {
         return {
@@ -49,9 +49,6 @@ function TaskboardApp(props: TaskboardAppProps) {
         } as StoreInfo
       }
     }
-
-
-
     return result
   }
 
@@ -59,23 +56,86 @@ function TaskboardApp(props: TaskboardAppProps) {
 
   return (
     store ?
-      (
+    (
       <TBApp store={store}/>
     )
       :
     (
-        <Loading/>
+      <Loading/>
     )
   );
 }
 
 
 
-function TBApp(props: {store: StoreInfo}) {
+function TBApp(props: { store: StoreInfo }) {
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
   const taskboard = useTaskboard(props.store)
+  const nav = useNavigate()
+  useEffect(() => {
+    function onFullscreenChange() {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    }
 
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      document.exitFullscreen();
+    };
+  }, []);
   return (
     <taskboardContext.Provider value={taskboard}>
+      <div style={{ height: "100vh",width: "100vw", display: "flex", padding: '1em', gap: "1em" , flexDirection: "column"}}>
+        <div className={style.tbTop}>
+          <BackButton action={() => {nav("/")}}/>
+          <img style={{ height: "100%" }} src={tbLogo} />
+          <FullScreenButton screenState={isFullscreen} />
+      </div>
+      <div style={{  height: "100%", width: "100%", display: "flex", gap: "1em" }}>
+    <ClockView />
+    <div style={{ display: "flex", width: "75%", flexDirection: "column", gap: "1em" }}>
+      <Topmenu />
+      <Taskboard />
+      <Bottommenu />
+    </div>
+    </div>
+      </div>
+    </taskboardContext.Provider>
+  );
+}
+
+interface BBProp {
+  action: ()=>void
+}
+function BackButton(props: BBProp) {
+  return (
+    <button className={style.navButton} onClick={props.action}>
+      <IoArrowBack />
+    </button>
+  );
+}
+
+interface FSBProp {
+  screenState: boolean
+}
+function FullScreenButton(props: FSBProp) {
+  
+
+  return (
+    <button
+      className={style.navButton}
+      onClick={() => {
+        !props.screenState
+          ? document.body.requestFullscreen()
+          : document.exitFullscreen();
+      }}
+    >
+      <IoScanOutline />
+    </button>
+  );
+}
+
+{/* <taskboardContext.Provider value={taskboard}>
     <div style={{ width: "100%", display: "flex", padding: '1em', gap: "1em" }}>
     <ClockView />
     <div style={{ display: "flex", width: "75%", flexDirection: "column", gap: "1em" }}>
@@ -88,8 +148,6 @@ function TBApp(props: {store: StoreInfo}) {
       <Bottommenu />
     </div>
     </div>
-    </taskboardContext.Provider>
-  );
-}
+    </taskboardContext.Provider> */}
 
 export default TaskboardApp;

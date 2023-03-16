@@ -53,7 +53,7 @@
   width: 100%;
   box-sizing: border-box;
   user-select: none;
-  min-height: 150px;
+  height: 10em;
 }
 
 .clock li {
@@ -61,21 +61,38 @@
   font-size: 30px;
 }
 
+.selectOptions {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  align-items: center;
+  color: $blue;
+
+
+  & div:hover {
+    cursor: pointer;
+    color: rgba(20, 105, 185, 1);
+    border-radius: 1em;
+    text-decoration: underline;
+  }
+
+}
+
 .navButton {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 1em;
   border-radius: 1em;
   background: none;
-  width: 3em;
+  aspect-ratio: 1/1;
   font-size: 2em;
-  color: white;
+  color: rgb(20, 20, 20);
   border: unset;
 
   &:hover {
     cursor: pointer;
-    background-color: rgba(87, 87, 87, 0.301);
+    background-color: whitesmoke;
   }
 }
 
@@ -96,7 +113,6 @@
 }
 
 .userLogHeader {
-  background-color: rgb(20, 20, 20);
   display: flex;
   color: white;
   align-items: center;
@@ -211,7 +227,7 @@
   overflow: hidden;
   border-radius: 1em;
   flex-direction: column;
-  height: 70%;
+  height: 100%;
 }
 
 .taskboardTop {
@@ -228,7 +244,7 @@
 
 .taskWindow {
   display: flex;
-  height: 100%;
+  min-height: 100%;
 }
 
 .sideSelectionMenu {
@@ -241,7 +257,7 @@
 
 .topMenu {
   display: flex;
-  height: 20%;
+  height: 30%;
   background-color: white;
   border-radius: 1em;
   border: $grayline;
@@ -249,10 +265,33 @@
 
 .bottomMenu {
   display: flex;
-  height: 10%;
-  background-color: whitesmoke;
+  background-color: white;
   border-radius: 1em;
   border: $grayline;
+  justify-content: space-evenly;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: fit-content;
+  width: 70%;
+}
+
+.bottomMenuOption {
+  display: flex;
+  text-align: center;
+  color: $blue;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+  justify-content: center;
+  padding: .5em;
+  margin: 0.2em;
+  border-radius: 1em;
+  aspect-ratio: 1/1;
+
+  &:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+  }
 }
 
 .sideSelectionMenuFilters {
@@ -290,12 +329,17 @@
   border-bottom: $grayline;
 }
 
-.tbLogo {
-  max-height: 5em;
-  margin-top: .5em;
+.tbTop {
+  background-color: white;
+  height: 4em;
+  overflow: hidden;
   display: flex;
+  justify-content: space-between;
   gap: 1em;
   align-items: center;
+  border-bottom: $grayline;
+  padding-bottom: 1em;
+  box-sizing: content-box;
 }
 
 .branchProfile {
@@ -309,9 +353,9 @@
 
 .topStyle {
   position: relative;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(40, 40, 40);
   min-width: 100%;
-  height: 4em;
+  height: 3em;
   border-right: 1px solid black;
   display: flex;
   justify-content: center;

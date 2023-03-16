@@ -12,7 +12,7 @@ function Clock() {
   return (
     <div
       style={{
-        padding: "20px",
+        padding: "1em 3em",
         userSelect: "none",
         paddingBottom: "30px",
         borderBottom: "1px solid rgba(136, 136, 136, 0.226)",

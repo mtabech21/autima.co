@@ -18,43 +18,42 @@
 
 .topbarSafezone {
   min-height: 50px;
-  background-color: white;
   overflow: visible;
-  max-width: 100%;
 }
 
 .rightBarWrapper {
-  width: 25%;
-  height: 100%;
-  right: 0;
-  position: relative;
-  margin: 1em;
+  white-space: nowrap;
+  min-width: 20%;
+  border-left: $grayline;
+  align-items: right;
 }
 
-.wrapper {
-  margin: 2em;
-  max-width: 75%;
-  min-width: 75%;
-  height: 100%;
-  margin-bottom: 2em;
-  overflow-y: scroll;
-  overflow: visible;
-  box-sizing: content-box;
-}
 
 .rightBar {
-  position: fixed;
-  border-left: $grayline;
-  display: flex;
-  justify-content: left;
-  color: gray;
-  padding-left: 1em;
+  min-width: 100%;
+  padding: 2em;
+  color: $blue;
   height: 100%;
   flex-direction: column;
-  gap: .5em;
+  font-size: 1.2em;
+
+  & div {
+    max-width: 100%;
+    text-align: end;
+  }
 
   & div:hover {
     text-decoration: underline;
     cursor: pointer;
   }
+}
+
+.wrapper {
+  margin: 2em;
+  max-width: 75%;
+  min-width: fit-content;
+  height: 100%;
+  margin-bottom: 2em;
+  overflow-x: hidden;
+  overflow: visible;
 }

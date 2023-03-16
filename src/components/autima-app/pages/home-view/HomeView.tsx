@@ -6,7 +6,6 @@ function HomeView() {
   
   return (
     <div className={"manager-home-container"}>
-      <HomeHeader />
       <div
         style={{
           height: "max-content",

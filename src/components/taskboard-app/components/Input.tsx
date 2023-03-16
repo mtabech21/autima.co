@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useContext, useState } from "react";
+import React, { forwardRef, useCallback, useContext, useEffect, useState } from "react";
 import styles from "../clockapp.module.scss"
 import { taskboardContext } from "../TaskboardApp";
 import { stringLength } from "@firebase/util";
@@ -11,7 +11,7 @@ interface InputType {
 const Input = forwardRef((props, ref: React.ForwardedRef<HTMLInputElement>) => {
   const session = useContext(taskboardContext)
   const [input, setInput] = useState("");
-  const update = (e: any) => {
+  const update = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
   const handleSubmit = async (e: any) => {
@@ -20,6 +20,12 @@ const Input = forwardRef((props, ref: React.ForwardedRef<HTMLInputElement>) => {
     setInput("")
   };
   
+  useEffect(() => {
+    if (input.length == 5) {
+      handleSubmit(null)
+    }
+  },[input])
+
   const getId = (from: string) => {
 
     let ids = session.clock.localIds

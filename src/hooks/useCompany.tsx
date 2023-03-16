@@ -55,7 +55,7 @@ export type Invite = {
 
 export type CompanyContext = {
   id: string,
-  stores: AutimaStore[]
+  stores: StoreInfo[]
   employees: AutimaEmployee[],
   storeList: StoreInfo[],
   pendingInvites: Invite[]
@@ -83,7 +83,7 @@ export const useCompany = (id: string): CompanyContext => {
   const companyDoc = doc(db,"companies", id)
   
 
-  const [stores, setStores] = useState([] as AutimaStore[])
+  const [stores, setStores] = useState([] as StoreInfo[])
   const [employees, setEmployees] = useState([] as AutimaEmployee[])
   const [storeList, setStoreList] = useState([] as StoreInfo[])
   const [info, setInfo] = useState({} as CompanyInfo)
@@ -102,7 +102,7 @@ export const useCompany = (id: string): CompanyContext => {
       setInfo(res as CompanyInfo)
     })
     getStores().then(res => {
-      setStores(res as AutimaStore[])
+      setStores(res as StoreInfo[])
     })
     getEmployees().then(res => {
       setEmployees(res as AutimaEmployee[])
@@ -116,19 +116,16 @@ export const useCompany = (id: string): CompanyContext => {
     return
   }, [reloadListener])
   
-  const getStores: () => Promise<AutimaStore[]> = useCallback(async () => {
+  const getStores: () => Promise<StoreInfo[]> = useCallback(async () => {
     const storesQ = query(collection(db, "stores"), where("companyId", "==", id))
-    var result: AutimaStore[] = []
+    var result: StoreInfo[] = []
     await getDocs(storesQ).then(snap => {
       
       snap.forEach(sn => {
       
-        let data = sn.data()
-        result.push({
-          branchId: data.branchId,
-          cityName: data.cityName,
-          storeId: sn.id
-        })
+        let data = sn.data() as StoreInfo
+        data.storeId = sn.id
+        result.push(data)
       })
     })
     return result

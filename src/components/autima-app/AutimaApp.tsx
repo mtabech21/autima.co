@@ -15,6 +15,7 @@ import MyBusinessView from "./pages/mybusiness/MyBusinessView";
 import useProfile, { profileContext } from "../../hooks/useProfile";
 import { User } from "firebase/auth";
 import SingleEmployeeView from "./pages/employees/single-employee/SingleEmployeeView";
+import { auth } from "../../App";
 
 interface AppProps {
   user: User
@@ -54,6 +55,7 @@ const EmployeeApp = (props: EmployeeAppProps) => {
   const profile = useProfile(props.user)
   
   
+  
 
 
   return (
@@ -65,6 +67,7 @@ const EmployeeApp = (props: EmployeeAppProps) => {
             <button key={i} onClick={()=> profile.joinCompany(v)}>Join {v.companyId}</button>
           ))
         }
+        <button onClick={() => {auth.signOut()}}>Sign out</button>
       </div>
     </profileContext.Provider>
   )
@@ -101,6 +104,8 @@ const AdminApp = (props: AdminAppProps) => {
         <Topbar />
       </div>
       <TopbarSafezone />
+      <div style={{ display: "flex"}}>
+        <div style={{width: "80%", overflow: "clip"}}>
       <Routes>
         <Route path="*" element={<HomeView />} />
         <Route path={"/stores"}>
@@ -118,8 +123,10 @@ const AdminApp = (props: AdminAppProps) => {
         <Route path={"/tasks"}/>
         <Route path={"/mybusiness"} element={<MyBusinessView />} />
         <Route path={"/support"} element={<TestElement/>}/>
-        </Routes>
-
+          </Routes>
+        </div>
+        <RightToolBar/>
+      </div>
         
     </div>
       
@@ -177,35 +184,16 @@ const TestElement = () => {
 const RightToolBar = () => {
   return (
     <div className={styles.rightBarWrapper}>
-          <div className={styles.rightBar}>
-            <div>Upcoming Tools</div>
+    <div className={styles.rightBar}>
+            <h3 style={{textAlign: "end", color: "black", margin: "0"}}>Quick tools</h3>
             <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-            <br />
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-            <br />
-            <div>Upcoming Tools</div>
-            <br />
-            <div>...Tool1</div>
-            <div>...Tool2</div>
-            <div>...Tool3</div>
-            <div>...Tool4</div>
-            <div>...Tool5</div>
-            <br />
-          </div>
-        </div>
+            <div>View Sales</div>
+            <div>Store Transfers</div>
+            <div>Add New Tasks</div>
+            <div>Manage Tickets</div>
+            <div>Onboard Employee</div>
+      </div>
+    </div>
   )
 }
 

@@ -1,0 +1,86 @@
+@import "../../../../../assets/colors";
+
+.tcTableHeader {
+  background-color: white;
+  border-bottom: $grayline;
+  align-items: center;
+  display: flex;
+  font-size: 1.2em;
+  padding: 0em 1em;
+  height: 2.5em;
+  font-weight: bold;
+  justify-content: space-between;
+}
+
+.tcTable {
+  background-color: whitesmoke;
+  border-radius: 1em;
+  border: $grayline;
+  overflow: hidden;
+}
+
+.tcTableRow {
+  display: flex;
+  background: white;
+  border-bottom: $grayline;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em 1em;
+  font-family: monospace;
+  white-space: nowrap;
+  height: 2.5em;
+
+  &:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+  }
+}
+
+.dateInterval {
+  font-family: monospace;
+  font-weight: normal;
+  color: gray;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: .5em 1em;
+  border-radius: 1em;
+
+  &:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+  }
+}
+
+.tcTableBottom {
+  display: flex;
+  padding: 0em 1em;
+  background-color: white;
+  height: 2.5em;
+  align-items: center;
+  border-top: $grayline;
+  justify-content: space-between;
+}
+
+.tcTableColumns {
+  height: 1.5em;
+  border-bottom: $grayline;
+  display: flex;
+  justify-content: space-between;
+  padding: 0em 1em;
+  align-items: center;
+  font-family: monospace;
+  color: gray;
+}
+
+.tcTableHeaderNav {
+  font-size: .8em;
+  color: $blue;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

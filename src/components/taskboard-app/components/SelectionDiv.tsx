@@ -35,7 +35,7 @@ const Selection = forwardRef((props: SelectionProps, ref) => {
 
         }}
     >
-      <div>{props.type}</div>
+      <div>{props.type == 0 ? "Clock In" : props.type == 1 ? "Clock Out" : props.type == 2 ? "Meal Break" : props.type == 3 ? "Paid Break" : "ERROR"}</div>
       {props.type === PunchType.in
         ? iconClockIn
         : props.type === PunchType.out
@@ -95,7 +95,6 @@ const SelectionDiv = (props) => {
     }
     
   }
-
   
   useEffect(() => {
     window.addEventListener("keydown", e => handleSelection(e), {once: true})
@@ -115,12 +114,18 @@ const SelectionDiv = (props) => {
   ]
 
   return (
+    <div style={{display: "flex", flexDirection: "column", height: "100%"}}>
     <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
       <Selection type={ PunchType.in } ref={refs[0]} />
       <Selection type={ PunchType.out }ref={refs[1]}/>
       <Selection type={ PunchType.meal } ref={refs[2]}/>
       <Selection type={ PunchType.paid } ref={refs[3]}/>
-    </div>
+      </div>
+      <div className={style.selectOptions}>
+        <div onClick={()=> session.clock.setSelectingTypeFor(null)} >Cancel <span style={{ color: "gray"}}>[X]</span></div>
+        <div >Request Correction</div>
+      </div>
+      </div>
   );
 };
 

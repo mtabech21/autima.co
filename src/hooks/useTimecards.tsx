@@ -8,10 +8,24 @@ import { ProfileInfo } from "./useProfile";
 
 
 
+export interface TimecardSession {
+  reload: () => void,
+  employee: ProfileInfo,
+  dateInterval: {
+    from: Date;
+    to: Date;
+} | null,
+  setDateInterval: React.Dispatch<React.SetStateAction<{
+    from: Date;
+    to: Date;
+} | null>>,
+  list: Timecard[]
+  getDayTotal: (punches: PunchData[]) => number
+}
 
 
 
-const useTimecards = (employee: ProfileInfo) => {
+const useTimecards = (employee: ProfileInfo): TimecardSession => {
   const [list, setList] = useState([] as Timecard[])
   const [reloadListener, setReloadListener] = useState(false)
   function reload() { setReloadListener(prev => !prev) }

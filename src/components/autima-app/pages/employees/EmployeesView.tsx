@@ -37,23 +37,25 @@ const EmployeesView = () => {
 
   return (
     <>
-      <div style={{ background: "white", display: "flex", overflow: "clip"}}>
+      <div style={{ display: "flex", overflow: "clip"}}>
         <div className={styles.wrapper}>
           
           <div className={styles.header}><div>Employees</div><div title="Onboard Employee" className={styles.headerAddBtn} onClick={()=> {nav("onboard")} }><div style={{fontSize: ".5em", color: "black", paddingRight: ".5em"}}>Onboard</div><FaPlus /></div></div>
           <br />
-          <div className={`${styles.employeesListWrapper} ${styles.pending}`}>
-            <div className={styles.employeesListHeader}>
-              <div style={{color: "gray", marginLeft: "1em"}}>Pending Company Invites</div>
-              <div style={{marginRight: "1em", color: 'gray'}}>{company.pendingInvites.length} Invites</div>
+          { (company.pendingInvites.length > 0) &&
+            <div className={`${styles.employeesListWrapper} ${styles.pending}`}>
+              <div className={styles.employeesListHeader}>
+                <div style={{ color: "gray", marginLeft: "1em" }}>Pending Company Invites</div>
+                <div style={{ marginRight: "1em", color: 'gray' }}>{company.pendingInvites.length} Invites</div>
               
+              </div>
+              <div className={styles.employeesList}>
+                {company.pendingInvites.map((v, i) => (
+                  <InviteRow uid={""} position={v.position} key={i} localId={v.localId} branch={v.storeId} fullName={v.userEmail} />
+                ))}
+              </div>
             </div>
-            <div className={styles.employeesList}>
-              {company.pendingInvites.map((v, i) => (
-                <InviteRow uid={""}  position={v.position} key={i} localId={v.localId} branch={v.storeId} fullName={v.userEmail} />
-              ))}
-            </div>
-          </div>
+          }
           <div className={styles.employeesListWrapper}>
             <div className={styles.employeesListHeader}>
               <div style={{ color: "gray", marginLeft: "1em" }}>Spirit Halloween</div>
