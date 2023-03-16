@@ -1,0 +1,13 @@
+@import "../../../../../assets/colors";
+
+.window {
+  display: flex;
+  align-self: baseline;
+  justify-self: center;
+  position: absolute;
+  height: 20em;
+  width: 30em;
+  background-color: white;
+  border-radius: 1em;
+  border: $grayline;
+}

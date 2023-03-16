@@ -1,0 +1,50 @@
+{
+  "tag": "svg",
+  "attr": {
+    "viewBox": "0 0 46.19 32.98"
+  },
+  "child": [
+    {
+      "tag": "defs",
+      "attr": {},
+      "child": []
+    },
+    {
+      "tag": "g",
+      "attr": {
+        "id": "a"
+      },
+      "child": []
+    },
+    {
+      "tag": "g",
+      "attr": {
+        "id": "b"
+      },
+      "child": [
+        {
+          "tag": "g",
+          "attr": {
+            "id": "c"
+          },
+          "child": [
+            {
+              "tag": "polygon",
+              "attr": {
+                "points": "0 0 23.09 32.98 23.09 0 0 0"
+              },
+              "child": []
+            },
+            {
+              "tag": "path",
+              "attr": {
+                "d": "M40.43,3l-14.33,20.46V3h14.33m5.76-3H23.09V32.98L46.19,0h0Z"
+              },
+              "child": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
