@@ -258,7 +258,7 @@ function Sidebar() {
               <div>Sign out</div>
             </div>
           </div>
-          <div>Copyright © 2022 Mete Solutions</div>
+          <div>Copyright © METE SOLUTIONS INC.</div>
           <div>
             <a href="/privacy">Privacy Policy</a>
           </div>

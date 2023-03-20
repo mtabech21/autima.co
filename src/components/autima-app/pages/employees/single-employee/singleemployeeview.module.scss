@@ -1,7 +1,7 @@
 @import "../../../../../assets/colors";
 
 .tcTableHeader {
-  background-color: white;
+  background-color: whitesmoke;
   border-bottom: $grayline;
   align-items: center;
   display: flex;
@@ -45,6 +45,7 @@
   background: white;
   padding: .5em 1em;
   border-radius: 1em;
+  border: $grayline;
 
   &:hover {
     cursor: pointer;
@@ -58,8 +59,9 @@
   background-color: white;
   height: 2.5em;
   align-items: center;
-  border-top: $grayline;
   justify-content: space-between;
+  font-family: monospace;
+  font-size: 1.2em;
 }
 
 .tcTableColumns {

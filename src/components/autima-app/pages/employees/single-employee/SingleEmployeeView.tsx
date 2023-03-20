@@ -30,7 +30,7 @@ function SingleEmployeeView() {
 }
 
 const TimecardTable = (props: { session: TimecardSession }) => {
-  const [isSelectingaDates, setIsSelectingDates] = useState(true)
+  const [isSelectingaDates, setIsSelectingDates] = useState(false)
   function getHoursStringFromMinutes(minutes: number): string {
     let numberOfHours = String((minutes - minutes % 60) / 60)
     let numberOfMinutes = String(minutes % 60)
@@ -66,7 +66,7 @@ const TimecardTable = (props: { session: TimecardSession }) => {
             ))
       }
       <div className={styles.tcTableBottom}>
-        <div style={{ fontWeight: 'bold' }}>Total</div>
+        <div style={{ fontWeight: 'bold', fontFamily: "monospace" }}>Total</div>
         <div>{getHoursStringFromMinutes(getIntervalMinutes(props.session.list))}</div>
       </div>
     </div>
