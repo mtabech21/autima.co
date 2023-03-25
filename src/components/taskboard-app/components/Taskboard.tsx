@@ -85,9 +85,6 @@ function SingleTask(props: SingleTaskProp) {
         { props.task.assignedTo &&
           <IoPerson style={{ fontSize: "1.2em", margin: "1em" }} onMouseEnter={() => setShowAssignedTo(true)} onMouseLeave={() => setShowAssignedTo(false)} />
         }
-        {(showAssignedTo && props.task.assignedTo) && <div className={style.assignedTo}>
-          {getNameFromUid(props.task.assignedTo)}
-        </div> }
       </div>
     </div>
   )
