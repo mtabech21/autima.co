@@ -43,7 +43,7 @@ function ClockView() {
           <Input ref={inputRef} />
         }
       </div>
-      <ActiveLog data={session.clock.activeUsers} />
+        <ActiveLog data={session.clock.activeUsers} />
       <BottomBar />
     </div>
   );

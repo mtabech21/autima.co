@@ -31,10 +31,11 @@ const useEmployee = (uid: string) => {
     getEmployee().then(res => {
       setInfo(res)
     })
-    timecards.setDateInterval({
-      from: Timestamp.fromMillis(0).toDate(),
-      to: Timestamp.now().toDate()
-    })
+    let now = Timestamp.now().toDate()
+    let from = Timestamp.now().toDate()
+
+
+    timecards.setDateInterval(timecards.getCurrentPeriod())
     timecards.reload()
   }, [reloadListener])
 

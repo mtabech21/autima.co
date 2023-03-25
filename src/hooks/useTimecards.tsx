@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { PunchData, PunchType, Timecard, UserID } from "../au-types";
+import { DateInterval, PunchData, PunchType, Timecard, UserID } from "../au-types";
 import { collection, getDocs, query, where, Timestamp} from "firebase/firestore";
 import { db } from "../App";
 import { ProfileInfo } from "./useProfile";
@@ -15,24 +15,19 @@ export interface TimecardSession {
     from: Date;
     to: Date;
 } | null,
-  setDateInterval: React.Dispatch<React.SetStateAction<{
-    from: Date;
-    to: Date;
-} | null>>,
+  setDateInterval: React.Dispatch<React.SetStateAction<DateInterval | null>>,
   list: Timecard[]
   getDayTotal: (punches: PunchData[]) => number
+  getCurrentPeriod: () => DateInterval
 }
 
-
-
 const useTimecards = (employee: ProfileInfo): TimecardSession => {
-  const [list, setList] = useState([] as Timecard[])
   const [reloadListener, setReloadListener] = useState(false)
   function reload() { setReloadListener(prev => !prev) }
-  const [dateInterval, setDateInterval] = useState<null | {
-    from: Date,
-    to: Date
-  }>(null)
+
+  const [list, setList] = useState([] as Timecard[])
+
+  const [dateInterval, setDateInterval] = useState<null | DateInterval>(null)
 
   useEffect(() => {
     getTimecards().then(res => {
@@ -71,8 +66,19 @@ const useTimecards = (employee: ProfileInfo): TimecardSession => {
     })
     return total
   }
-  
-  return {reload, employee, dateInterval, setDateInterval, list, getDayTotal}
+  const getCurrentPeriod = (): DateInterval => {
+    let to = new Date()
+    let from = new Date()
+    if (to.getDate() <= 15) {
+      from.setDate(0)
+      to.setDate(15)
+    } else if (to.getDate() > 15) {
+      from.setDate(16)
+      to.setMonth(to.getMonth() + 1,0)
+    }
+    return {from, to}
+  }
+  return {reload, employee, dateInterval, setDateInterval, list, getDayTotal, getCurrentPeriod}
 }
 
 export default useTimecards

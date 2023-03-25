@@ -28,7 +28,8 @@ function TaskboardApp(props: TaskboardAppProps) {
     getStore().then(res => {
       setStore(res)
     })
-    document.body.requestFullscreen()
+    document.body.requestFullscreen().catch(() => {
+    })
   }, [])
 
   const getStore: () => Promise<StoreInfo> = async () => {
@@ -85,13 +86,13 @@ function TBApp(props: { store: StoreInfo }) {
   }, []);
   return (
     <taskboardContext.Provider value={taskboard}>
-      <div style={{ height: "100vh",width: "100vw", display: "flex", padding: '1em', gap: "1em" , flexDirection: "column"}}>
+      <div style={{maxHeight: "100vh",width: "100vw", display: "flex", padding: '1em', gap: "1em" , flexDirection: "column"}}>
         <div className={style.tbTop}>
           <BackButton action={() => {nav("/")}}/>
-          <img style={{ height: "100%" }} src={tbLogo} />
+          <img style={{ minHeight: "2em", height: "100%" }} src={tbLogo} />
           <FullScreenButton screenState={isFullscreen} />
       </div>
-      <div style={{  height: "100%", width: "100%", display: "flex", gap: "1em" }}>
+      <div className={style.appWindow}>
     <ClockView />
     <div style={{ display: "flex", width: "75%", flexDirection: "column", gap: "1em" }}>
       <Topmenu />

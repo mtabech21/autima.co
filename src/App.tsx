@@ -1,5 +1,4 @@
 import  "./main.scss";
-import React from "react";
 import AutimaApp from "./components/autima-app/AutimaApp";
 import AuthApp from "./components/auth-app/AuthApp";
 import Loading from "./components/loading/Loading";

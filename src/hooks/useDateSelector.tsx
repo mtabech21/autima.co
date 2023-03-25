@@ -5,8 +5,8 @@ type DateSelectorOptions = {
   range?: boolean
 }
 
-function useDateSelector<T extends Date | {from: Date, to: Date}>(props: DateSelectorOptions) {
-  let range = props.range ?? false
+function useDateSelector<T extends Date | {from: Date, to: Date}>(options: DateSelectorOptions) {
+  let range = options.range ?? false
   const [selection, setSelection] = useState<T>()
 
 

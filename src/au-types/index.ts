@@ -43,17 +43,20 @@ export type ClockSession = {
   activeUsers: ActiveUser[]
   selectingTypeFor: string | null
   setSelectingTypeFor: React.Dispatch<React.SetStateAction<string | null>>
-  localIds: Object,
   publish: () => void,
   updateListener: boolean
 }
-
+export type DateInterval = {
+  from: Date,
+  to: Date
+}
 
 export enum PunchType {
   in, out, meal, paid
 }
 
 export type PunchData = {
+  punchData: FirebaseFirestore.Timestamp
   type: PunchType
   time: FS.Timestamp
 }
@@ -85,7 +88,7 @@ export type Task = {
   status: TaskStatus,
   hours?: number,
   checkList?: CheckEntity[]
-  assignedTo?: UserID
+  assignedTo?: [UserID]
 }
 
 export type CheckEntity = {

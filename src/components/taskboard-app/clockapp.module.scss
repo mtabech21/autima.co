@@ -2,8 +2,7 @@
 
 .clock {
   background-color: whitesmoke;
-  min-height: 100%;
-  height: fit-content;
+  height: 100%;
   max-height: 100%;
   display: flex;
   align-items: center;
@@ -16,6 +15,7 @@
   overflow: hidden;
   border-radius: 1em;
   min-width: fit-content;
+  position: relative;
 }
 
 .clock .userInput {
@@ -53,7 +53,7 @@
   width: 100%;
   box-sizing: border-box;
   user-select: none;
-  height: 10em;
+  min-height: 10em;
 }
 
 .clock li {
@@ -218,6 +218,7 @@
   width: 100%;
   border-top: 1px solid rgba(136, 136, 136, 0.4);
   background-color: white;
+  bottom: 0;
 }
 
 .taskboard {
@@ -331,7 +332,8 @@
 
 .tbTop {
   background-color: white;
-  height: 4em;
+  height: 5%;
+  min-height: 3em;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
@@ -389,4 +391,13 @@
 
 .taskListContainer {
   width: 100%;
+}
+
+.appWindow {
+  height: 100%;
+  max-height: 95%;
+  width: 100%;
+  display: flex;
+  gap: 1em;
+  box-sizing: border-box;
 }

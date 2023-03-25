@@ -23,7 +23,9 @@ const Selection = forwardRef((props: SelectionProps, ref) => {
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
-      session.clock.punch(session.clock.selectingTypeFor!, props.type)
+      let uid = session.clock.selectingTypeFor
+      if (uid == null) { throw "NO UID" }
+      session.clock.punch(uid, props.type)
       session.clock.setSelectingTypeFor(null)
     }}
     className={style.clockSelectType}>
@@ -95,7 +97,6 @@ const SelectionDiv = (props) => {
     }
     
   }
-  
   useEffect(() => {
     window.addEventListener("keydown", e => handleSelection(e), {once: true})
     if (refs[selection % 4] != null) {
